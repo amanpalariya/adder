@@ -1,0 +1,7 @@
+analyzer:
+  strong-mode:
+    implicit-casts: true
+  errors:
+    missing_required_param: error
+    missing_return: error
+    must_be_immutable: error
