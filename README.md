@@ -2,7 +2,7 @@
 
 This is a simple game 🕹 with two controls. It requires the user to guess if a mathematical equation (only addition, because it's 'Adder') is correct.
 
-## Why did I make this simple game? 🤔
+## Why this simple game? 🤔
 
 This is game is simple, right?\
 \
