@@ -19,5 +19,5 @@ This game is kept simple so as to allow people of all skill levels‍ to appreci
 
 ## What next? 🛠
 
-Well you can create pull requests. It would be happily 😃 merged as long as the code is clean and architecture is intact 💪🏻.\
+Well, you can create pull requests. It would be happily 😃 merged as long as the code is clean and architecture is intact 💪🏻.\
 For example, you can work on beautifying 💇🏻‍♀️ the UI or extend the app for more than just addition.
