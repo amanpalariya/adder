@@ -15,8 +15,10 @@ part 'quiz_bloc.freezed.dart';
 
 @injectable
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
-
   final IQuestionGenerator _questionGenerator;
+  final Duration updatePeriod = const Duration(milliseconds: 100);
+  final Duration responseDisplayDuration = const Duration(seconds: 1);
+  StreamSubscription _timerStreamSubscription;
 
   QuizBloc(this._questionGenerator);
 
@@ -27,66 +29,108 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   Stream<QuizState> mapEventToState(
     QuizEvent event,
   ) async* {
-    yield* event.map(
-      onStart: (e) async* {
-        Question question = await newQuestion();
-        yield state.copyWith(
-          question: question,
-          questionLoading: false,
-          gameStarted: true,
-        );
-      },
-      onYesButtonPressed: (e) async* {
-        if(state.questionLoading){
-          yield state;
-        }else{
-          yield state.copyWith(
-            questionLoading: true,
-          );
-          if(state.question.isTrue){
-            yield await correctResponse();
-          }else{
-            yield await incorrectResponse();
+    yield* event.map(start: (e) async* {
+      yield QuizState.loadingQuestion(
+        correctAnswersCount: 0,
+        incorrectAnswersCount: 0,
+        totalAnswersCount: 0,
+      );
+      showNewQuestion();
+    }, onYesButtonPressed: (e) async* {
+      yield state.maybeMap(
+        showingQuestion: (showingQuestionState) {
+          _timerStreamSubscription?.cancel();
+          if (showingQuestionState.question.isTrue) {
+            return correctResponse();
+          } else {
+            return incorrectResponse();
           }
-        }
-      },
-      onNoButtonPressed: (e) async* {
-        if(state.questionLoading){
-          yield state;
-        }else{
-          yield state.copyWith(
-            questionLoading: true,
-          );
-          if(!state.question.isTrue){
-            yield await correctResponse();
-          }else{
-            yield await incorrectResponse();
+        },
+        orElse: () => state,
+      );
+      await Future.delayed(responseDisplayDuration);
+      yield* showNewQuestion();
+    }, onNoButtonPressed: (e) async* {
+      yield state.maybeMap(
+        showingQuestion: (showingQuestionState) {
+          _timerStreamSubscription?.cancel();
+          if (!showingQuestionState.question.isTrue) {
+            return correctResponse();
+          } else {
+            return incorrectResponse();
           }
-        }
+        },
+        orElse: () => state,
+      );
+      await Future.delayed(responseDisplayDuration);
+      yield* showNewQuestion();
+    });
+  }
+
+  Future<Question> newQuestion() async {
+    return await _questionGenerator.generateQuestion();
+  }
+
+  Stream<QuizState> showNewQuestion(
+      {int correctAnswersCount = 0,
+      int incorrectAnswersCount = 0,
+      int totalAnswersCount = 0}) async* {
+    Question question = await newQuestion();
+    Stream timer = Stream.periodic(updatePeriod);
+    Duration timeLeft = _questionGenerator.maxTimePerQuestion;
+    _timerStreamSubscription?.cancel();
+    _timerStreamSubscription = timer.listen((_) async* {
+      yield QuizState.showingQuestion(
+        question: question,
+        correctAnswersCount: 0,
+        incorrectAnswersCount: 0,
+        totalAnswersCount: 0,
+        timeLeft: timeLeft,
+      );
+      timeLeft = timeLeft - updatePeriod;
+      if (timeLeft <= Duration.zero) {
+        yield timeUp();
+        _timerStreamSubscription.cancel();
       }
+    });
+  }
+
+  QuizState correctResponse() {
+    return state.maybeMap(
+      showingQuestion: (showingQuestionState) => QuizState.showingResponse(
+        question: showingQuestionState.question,
+        correctAnswersCount: showingQuestionState.correctAnswersCount + 1,
+        incorrectAnswersCount: showingQuestionState.incorrectAnswersCount,
+        totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
+        response: Response.DoneRight,
+      ),
+      orElse: () => state,
     );
   }
 
-  Future<Question> newQuestion(){
-    return _questionGenerator.generateQuestion();
-  }
-
-  Future<QuizState> correctResponse() async {
-    Question question = await newQuestion();
-    return state.copyWith(
-      question: question,
-      questionLoading: false,
-      correctAnswers: state.correctAnswers + 1,
-      totalAnswers: state.totalAnswers + 1,
+  QuizState incorrectResponse() {
+    return state.maybeMap(
+      showingQuestion: (showingQuestionState) => QuizState.showingResponse(
+        question: showingQuestionState.question,
+        correctAnswersCount: showingQuestionState.correctAnswersCount,
+        incorrectAnswersCount: showingQuestionState.incorrectAnswersCount + 1,
+        totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
+        response: Response.DoneRight,
+      ),
+      orElse: () => state,
     );
   }
 
-  Future<QuizState> incorrectResponse() async {
-    Question question = await newQuestion();
-    return state.copyWith(
-      question: question,
-      questionLoading: false,
-      totalAnswers: state.totalAnswers + 1,
+  QuizState timeUp() {
+    return state.maybeMap(
+      showingQuestion: (showingQuestionState) => QuizState.showingResponse(
+        question: showingQuestionState.question,
+        correctAnswersCount: showingQuestionState.correctAnswersCount,
+        incorrectAnswersCount: showingQuestionState.incorrectAnswersCount,
+        totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
+        response: Response.DoneRight,
+      ),
+      orElse: () => state,
     );
   }
 }

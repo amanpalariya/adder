@@ -1,20 +1,30 @@
 part of 'quiz_bloc.dart';
 
-@freezed
-abstract class QuizState with _$QuizState{
-  const factory QuizState({
-    @required Question question,
-    @required bool gameStarted,
-    @required bool questionLoading,
-    @required int correctAnswers,
-    @required int totalAnswers,
-  }) = _QuizState;
+enum Response { DoneRight, DoneWrong, TimeUp }
 
-  factory QuizState.initial() => QuizState(
-    question: Question(operands: [2, 2], maybeAnswer: 4, correctAnswer: 4),
-    gameStarted: false,
-    questionLoading: true,
-    correctAnswers: 0,
-    totalAnswers: 0,
-  );
+@freezed
+abstract class QuizState with _$QuizState {
+  const factory QuizState.showingQuestion({
+    @required Question question,
+    @required Duration timeLeft,
+    @required int correctAnswersCount,
+    @required int incorrectAnswersCount,
+    @required int totalAnswersCount,
+  }) = _ShowingQuestion;
+
+  factory QuizState.initial() = _Initial;
+
+  factory QuizState.loadingQuestion({
+    @required int correctAnswersCount,
+    @required int incorrectAnswersCount,
+    @required int totalAnswersCount,
+  }) = _LoadingQuestion;
+
+  factory QuizState.showingResponse({
+    @required Question question,
+    @required int correctAnswersCount,
+    @required int incorrectAnswersCount,
+    @required int totalAnswersCount,
+    @required Response response,
+  }) = _ShowingResponse;
 }

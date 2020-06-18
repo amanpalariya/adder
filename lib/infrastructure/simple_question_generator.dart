@@ -5,22 +5,23 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 @RegisterAs(IQuestionGenerator, env: Environment.dev)
-///This class generates questions that contain only two single-digit positive numbers
-class SimpleQuestionGenerator implements IQuestionGenerator{
 
+///This class generates questions that contain only two single-digit positive numbers
+class SimpleQuestionGenerator implements IQuestionGenerator {
   RandomGenerator _randomGenerator;
 
   SimpleQuestionGenerator(this._randomGenerator);
 
-  int _getRandomNumber(){
+  int _getRandomNumber() {
     return _randomGenerator.getRandomIntegerBetween(1, 9);
   }
 
-  int _getConfusingAnswer(int operand1, int operand2){
+  int _getConfusingAnswer(int operand1, int operand2) {
     bool giveWrongAnswer = _randomGenerator.randomBool();
     int deviation = 0;
-    if(giveWrongAnswer){
-      deviation = (_randomGenerator.randomBool()?1:-1)*((operand1 - operand2).abs() + 2);
+    if (giveWrongAnswer) {
+      deviation = (_randomGenerator.randomBool() ? 1 : -1) *
+          ((operand1 - operand2).abs() + 2);
     }
     return (operand1 + operand2) + deviation;
   }
@@ -43,4 +44,7 @@ class SimpleQuestionGenerator implements IQuestionGenerator{
       maybeAnswer: maybeWrongAnswer,
     );
   }
+
+  @override
+  Duration get maxTimePerQuestion => const Duration(milliseconds: 5000);
 }

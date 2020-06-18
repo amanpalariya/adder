@@ -5,35 +5,35 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 @RegisterAs(IQuestionGenerator, env: Environment.prod)
-///This class generates questions that contain larger operands (both in number and value)
-class ToughQuestionGenerator implements IQuestionGenerator{
 
+///This class generates questions that contain larger operands (both in number and value)
+class ToughQuestionGenerator implements IQuestionGenerator {
   RandomGenerator _randomGenerator;
 
   ToughQuestionGenerator(this._randomGenerator);
 
-  int _getRandomNumber(){
+  int _getRandomNumber() {
     int max = 50;
-    return _randomGenerator.getRandomIntegerBetween(-max-1, max+1);
+    return _randomGenerator.getRandomIntegerBetween(-max - 1, max + 1);
   }
 
-  int _numberOfOperands(){
+  int _numberOfOperands() {
     return _randomGenerator.getRandomIntegerBetween(1, 5);
   }
 
-  int _getConfusingAnswer(List<int> operands){
-    assert(operands.length>=2);
+  int _getConfusingAnswer(List<int> operands) {
+    assert(operands.length >= 2);
     bool giveWrongAnswer = _randomGenerator.randomBool();
     int correctAnswer = 0;
     int previousValue = operands.first;
     int maxDeviation = 0;
-    for(int value in operands){
+    for (int value in operands) {
       maxDeviation += (value.abs() - previousValue.abs()).abs();
       correctAnswer += value;
     }
     int deviation = 0;
-    if(giveWrongAnswer){
-      deviation = (_randomGenerator.randomBool()?1:-1)*(maxDeviation);
+    if (giveWrongAnswer) {
+      deviation = (_randomGenerator.randomBool() ? 1 : -1) * (maxDeviation);
     }
     return correctAnswer + deviation;
   }
@@ -43,7 +43,8 @@ class ToughQuestionGenerator implements IQuestionGenerator{
   }
 
   Future<void> _randomWait(int maxWaitInMilliseconds) async {
-    int waitTime = _randomGenerator.getPositiveNumberLessThan(maxWaitInMilliseconds);
+    int waitTime =
+        _randomGenerator.getPositiveNumberLessThan(maxWaitInMilliseconds);
     await wait(waitTime);
   }
 
@@ -52,7 +53,7 @@ class ToughQuestionGenerator implements IQuestionGenerator{
     List<int> operands = [];
     int numberOfOperands = _numberOfOperands();
     int correctAnswer = 0;
-    for(int i = 0; i < numberOfOperands; i++){
+    for (int i = 0; i < numberOfOperands; i++) {
       int operand = _getRandomNumber();
       operands.add(operand);
       correctAnswer += operand;
@@ -65,4 +66,7 @@ class ToughQuestionGenerator implements IQuestionGenerator{
       maybeAnswer: maybeWrongAnswer,
     );
   }
+
+  @override
+  Duration get maxTimePerQuestion => const Duration(milliseconds: 3000);
 }
