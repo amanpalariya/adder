@@ -46,5 +46,5 @@ class SimpleQuestionGenerator implements IQuestionGenerator {
   }
 
   @override
-  Duration get maxTimePerQuestion => const Duration(milliseconds: 5000);
+  Duration get maxTimePerQuestion => const Duration(milliseconds: 10000);
 }

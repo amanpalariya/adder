@@ -68,5 +68,5 @@ class ToughQuestionGenerator implements IQuestionGenerator {
   }
 
   @override
-  Duration get maxTimePerQuestion => const Duration(milliseconds: 3000);
+  Duration get maxTimePerQuestion => const Duration(milliseconds: 8000);
 }

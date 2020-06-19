@@ -7,6 +7,7 @@ abstract class QuizState with _$QuizState {
   const factory QuizState.showingQuestion({
     @required Question question,
     @required Duration timeLeft,
+    @required Duration maxTimePerQuestion,
     @required int correctAnswersCount,
     @required int incorrectAnswersCount,
     @required int totalAnswersCount,

@@ -9,7 +9,6 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-
   @override
   void initState() {
     super.initState();
@@ -17,59 +16,86 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<QuizBloc, QuizState>(
-      listener: (context, state){},
-      builder: (context, state){
-        const double horizontalPadding = 16.0;
-        List<Widget> children = [
+    return BlocConsumer<QuizBloc, QuizState>(listener: (context, state) {
+      // state.map(
+      //   initial: (state) {
+      //     print(state);
+      //   },
+      //   loadingQuestion: (state) {
+      //     print(state);
+      //   },
+      //   showingQuestion: (state) {
+      //     print(state);
+      //   },
+      //   showingResponse: (state) {
+      //     print(state);
+      //   },
+      // );
+    }, builder: (context, state) {
+      const double horizontalPadding = 16.0;
+      List<Widget> children = [
+        Container(
+          child: _buildScorecard(state),
+        ),
+        SizedBox(
+          height: horizontalPadding,
+          width: horizontalPadding,
+        ),
+        Expanded(
+          flex: 10,
+          child: _buildQuestionCard(state),
+        ),
+        SizedBox(
+          height: horizontalPadding,
+          width: horizontalPadding,
+        ),
+        _buildAnswerPanel(context, state),
+      ];
+      return Column(
+        children: <Widget>[
           Container(
-            child: _buildScorecard(state),
+            child: _buildAppBar(),
           ),
-          SizedBox(height: horizontalPadding, width: horizontalPadding,),
           Expanded(
-            flex: 10,
-            child: _buildQuestionCard(state),
+            child: OrientationBuilder(builder: (context, orientation) {
+              if (orientation == Orientation.landscape) {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: horizontalPadding),
+                  child: Row(
+                    children: children,
+                  ),
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.only(
+                      left: horizontalPadding,
+                      right: horizontalPadding,
+                      bottom: horizontalPadding),
+                  child: Column(
+                    children: children,
+                  ),
+                );
+              }
+            }),
           ),
-          SizedBox(height: horizontalPadding, width: horizontalPadding,),
-          _buildAnswerPanel(context, state),
-        ];
-        return Column(
-          children: <Widget>[
-            Container(
-              child: _buildAppBar(),
-            ),
-            Expanded(
-              child: OrientationBuilder(
-                builder: (context, orientation) {
-                  if(orientation==Orientation.landscape){
-                    return Padding(
-                      padding: const EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, bottom: horizontalPadding),
-                      child: Row(
-                        children: children,
-                      ),
-                    );
-                  }else{
-                    return Padding(
-                      padding: const EdgeInsets.only(left: horizontalPadding, right: horizontalPadding, bottom: horizontalPadding),
-                      child: Column(
-                        children: children,
-                      ),
-                    );
-                  }
-                }
-              ),
-            ),
-          ],
-        );
-      }
-    );
+        ],
+      );
+    });
   }
 
-  Widget _buildTitle(){
+  Widget _buildTitle() {
     return Row(
       children: <Widget>[
-        Image.asset('assets/logo/ic_launcher.png', height: 32,),
-        SizedBox(width: 12,),
+        Image.asset(
+          'assets/logo/ic_launcher.png',
+          height: 32,
+        ),
+        SizedBox(
+          width: 12,
+        ),
         Text(
           "Adder",
           style: TextStyle(
@@ -82,41 +108,42 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _makeActionButton({String tooltip, Icon icon, Function onPressed}){
+  Widget _makeActionButton({String tooltip, Icon icon, Function onPressed}) {
     return IconButton(
       icon: icon,
       tooltip: tooltip,
-      onPressed: onPressed??(){},
+      onPressed: onPressed ?? () {},
       color: Colors.grey[500],
     );
   }
 
-  Row _buildActionsRow(){
+  Row _buildActionsRow() {
     List<IconButton> buttons = [];
     buttons.add(_makeActionButton(
-      icon: Icon(Icons.info_outline),
-      tooltip: "About",
-      onPressed: (){
-        showAboutDialog(
-          context: context,
-          applicationIcon: Image.asset('assets/logo/ic_launcher.png', scale: 3,),
-          applicationName: "Adder",
-          applicationVersion: "1.0.0",
-          children: [
-            Text(
-              'A game that helps you practice your addition skills. Spend time with this app and you will be rewarded.'
+        icon: Icon(Icons.info_outline),
+        tooltip: "About",
+        onPressed: () {
+          showAboutDialog(
+            context: context,
+            applicationIcon: Image.asset(
+              'assets/logo/ic_launcher.png',
+              scale: 3,
             ),
-          ],
-        );
-      }
-    ));
+            applicationName: "Adder",
+            applicationVersion: "1.0.0",
+            children: [
+              Text(
+                  'A game that helps you practice your addition skills. Spend time with this app and you will be rewarded.'),
+            ],
+          );
+        }));
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: buttons,
     );
   }
 
-  Row _buildTitleRow(){
+  Row _buildTitleRow() {
     Widget titleWidget = _buildTitle();
     Row actions = _buildActionsRow();
     return Row(
@@ -129,8 +156,9 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildAppBar(){
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0);
+  Widget _buildAppBar() {
+    EdgeInsetsGeometry padding =
+        const EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0);
     return Material(
       color: Colors.transparent,
       child: SafeArea(
@@ -142,8 +170,9 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildInfoColumn({@required int data, String supportingText, Color color}){
-    color = color??Colors.black;
+  Widget _buildInfoColumn(
+      {@required int data, String supportingText, Color color}) {
+    color = color ?? Colors.black;
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +188,7 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Text(
-          (supportingText??""),
+          (supportingText ?? ""),
           style: TextStyle(
             fontSize: 12,
             color: color,
@@ -169,47 +198,111 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildScorecardContent(QuizState state){
-    List<Widget> children = <Widget>[
-      Expanded(
-        child: _buildInfoColumn(
-          data: state.correctAnswers,
-          supportingText: "Correct",
-          color: Colors.green
+  Widget _buildScorecardContent(QuizState state) {
+    List<Widget> children = [];
+    children = state.maybeMap(
+      showingQuestion: (state) => <Widget>[
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.correctAnswersCount,
+              supportingText: "Correct",
+              color: Colors.green),
         ),
-      ),
-      Expanded(
-        child: _buildInfoColumn(
-          data: state.totalAnswers - state.correctAnswers,
-          supportingText: "Incorrect",
-          color: Colors.red
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.incorrectAnswersCount,
+              supportingText: "Incorrect",
+              color: Colors.red),
         ),
-      ),
-      Expanded(
-        child: _buildInfoColumn(
-          data: state.totalAnswers,
-          supportingText: "Total",
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.totalAnswersCount -
+                  state.correctAnswersCount -
+                  state.incorrectAnswersCount,
+              supportingText: "Missed",
+              color: Colors.blue),
         ),
-      ),
-    ];
-    return OrientationBuilder(
-      builder: (context, orientation) {
-        if(orientation==Orientation.landscape){
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
-          );
-        }else{
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: children,
-          );
-        }
-      }
+        Expanded(
+          child: _buildInfoColumn(
+            data: state.totalAnswersCount,
+            supportingText: "Total",
+          ),
+        ),
+      ],
+      showingResponse: (state) => <Widget>[
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.correctAnswersCount,
+              supportingText: "Correct",
+              color: Colors.green),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.incorrectAnswersCount,
+              supportingText: "Incorrect",
+              color: Colors.red),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.totalAnswersCount -
+                  state.correctAnswersCount -
+                  state.incorrectAnswersCount,
+              supportingText: "Missed",
+              color: Colors.blue),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+            data: state.totalAnswersCount,
+            supportingText: "Total",
+          ),
+        ),
+      ],
+      loadingQuestion: (state) => <Widget>[
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.correctAnswersCount,
+              supportingText: "Correct",
+              color: Colors.green),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.incorrectAnswersCount,
+              supportingText: "Incorrect",
+              color: Colors.red),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.totalAnswersCount -
+                  state.correctAnswersCount -
+                  state.incorrectAnswersCount,
+              supportingText: "Missed",
+              color: Colors.blue),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+            data: state.totalAnswersCount,
+            supportingText: "Total",
+          ),
+        ),
+      ],
+      orElse: () => [],
     );
+    return OrientationBuilder(builder: (context, orientation) {
+      if (orientation == Orientation.landscape) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children,
+        );
+      } else {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: children,
+        );
+      }
+    });
   }
 
-  Widget _buildScorecard(QuizState state){
+  Widget _buildScorecard(QuizState state) {
     BorderRadius borderRadius = const BorderRadius.all(Radius.circular(16));
     EdgeInsetsGeometry padding = const EdgeInsets.all(16.0);
     return Material(
@@ -226,68 +319,157 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildLoading(){
+  Widget _buildLoading() {
     return Center(
       child: CircularProgressIndicator(),
     );
   }
 
-  Widget _buildStartScreen(){
+  Widget _buildStartScreen() {
     return Center(
       child: Image.asset('assets/logo/ic_launcher.png', scale: 2),
     );
   }
 
-  Widget _buildQuestionCardContent(Question question){
+  String format(Duration timeLeft) {
+    double seconds = timeLeft.inMilliseconds / 1000;
+    return "${seconds.toStringAsFixed(2)}";
+  }
+
+  Widget _buildQuestionContent(Question question, Duration timeLeft, Duration maxTimePerQuestion) {
+    const double padding = 16.0;
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(
-          "Question",
-          style: TextStyle(
-            color: Colors.grey[500],
+        Padding(
+          padding: const EdgeInsets.only(
+            right: padding,
+            left: padding,
+            top: padding,
+          ),
+          child: Text(
+            "Question",
+            style: TextStyle(
+              color: Colors.grey[500],
+            ),
           ),
         ),
         Expanded(
-          child: Center(
-            child: Text(
-              question.toString(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 24,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: padding),
+            child: Center(
+              child: Text(
+                question.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 24,
+                ),
               ),
             ),
           ),
-        )
+        ),
+        // Text(
+        //   format(timeLeft),
+        //   style: TextStyle(
+        //     color: timeColor,
+        //     fontSize: 16,
+        //   ),
+        // ),
+        LinearProgressIndicator(
+          // backgroundColor: timeColor,
+          value: timeLeft.inMilliseconds / maxTimePerQuestion.inMilliseconds,
+        ),
       ],
     );
   }
-  
-  Widget _buildQuestionCard(QuizState state){
-    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(16.0));
-    EdgeInsetsGeometry padding = const EdgeInsets.all(16.0);
-    Widget child = _buildStartScreen();
-    if(state.gameStarted){
-      child = state.questionLoading?_buildLoading():_buildQuestionCardContent(state.question);
+
+  Widget _buildResponseContent(Question question, Response response) {
+    Color signalColor;
+    switch (response) {
+      case Response.DoneRight:
+        signalColor = Colors.green;
+        break;
+      case Response.DoneWrong:
+        signalColor = Colors.red;
+        break;
+      case Response.TimeUp:
+        signalColor = Colors.blue;
+        break;
+      default:
+        signalColor = Colors.black;
     }
+    const double padding = 16.0;
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(
+            left: padding,
+            right: padding,
+            top: padding,
+          ),
+          child: Text(
+            "Answer",
+            style: TextStyle(
+              color: Colors.grey[500],
+            ),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: padding),
+            child: Center(
+              child: Text(
+                question.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: signalColor,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildQuestionCard(QuizState state) {
+    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(16.0));
+    Widget child = _buildStartScreen();
+    child = state.map(
+      initial: (state) => _buildStartScreen(),
+      loadingQuestion: (state) => _buildLoading(),
+      showingQuestion: (state) =>
+          _buildQuestionContent(state.question, state.timeLeft, state.maxTimePerQuestion),
+      showingResponse: (state) =>
+          _buildResponseContent(state.question, state.response),
+    );
     return Material(
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
         side: BorderSide(color: Colors.grey[300], width: 2),
       ),
       // elevation: 2.0,
-      child: Padding(
-        padding: padding,
-        child: child,
-      ),
+      clipBehavior: Clip.antiAlias,
+      child: child,
     );
   }
 
-  Widget _buildButton({IconData iconData, String text, Function onTap, Color color}){
+  Widget _buildButton({
+    IconData iconData,
+    String text,
+    Function onTap,
+    Color color,
+    bool enabled = true,
+  }) {
     EdgeInsetsGeometry padding = EdgeInsets.all(8.0);
-    color = color??Colors.grey[300];
+    color = enabled && color != null ? color : Colors.grey[700];
+    onTap = enabled ? onTap : null;
     Color iconColor = color;
+    //Color textColor = enabled?Colors.grey[700]:Colors.grey[300];
     Color secondaryColor = color.withOpacity(0.5);
     Color tertiaryColor = color.withOpacity(0.2);
     return AspectRatio(
@@ -314,7 +496,10 @@ class _QuizPageState extends State<QuizPage> {
                   iconData,
                   color: iconColor,
                 ),
-                Text(text, style: TextStyle(color: Colors.grey[700]),),
+                Text(
+                  text,
+                  style: TextStyle(color: Colors.grey[700]),
+                ),
               ],
             ),
           ),
@@ -323,51 +508,58 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildYesButton(BuildContext context, QuizState state){
+  Widget _buildYesButton(BuildContext context, QuizState state) {
     return _buildButton(
       iconData: Icons.check,
       text: 'Yes',
-      onTap: state.questionLoading?(){}:(){
+      onTap: () {
         context.bloc<QuizBloc>().add(QuizEvent.onYesButtonPressed());
       },
+      enabled:
+          state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
       color: Colors.green,
     );
   }
 
-  Widget _buildNoButton(BuildContext context, QuizState state){
+  Widget _buildNoButton(BuildContext context, QuizState state) {
     return _buildButton(
       iconData: Icons.clear,
       text: 'No',
-      onTap: state.questionLoading?(){}:(){
+      onTap: () {
         context.bloc<QuizBloc>().add(QuizEvent.onNoButtonPressed());
       },
+      enabled:
+          state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
       color: Colors.red,
     );
   }
 
-  Widget _buildStartButton(BuildContext context, QuizState state){
+  Widget _buildStartButton(BuildContext context, QuizState state) {
     return _buildButton(
       iconData: Icons.play_arrow,
       text: 'Start',
-      onTap: (){
-        context.bloc<QuizBloc>().add(QuizEvent.onStart());
+      onTap: () {
+        context.bloc<QuizBloc>().add(QuizEvent.start());
       },
       color: Colors.blue,
     );
   }
 
-  Widget _buildAnswerPanel(BuildContext context, QuizState state){
+  Widget _buildAnswerPanel(BuildContext context, QuizState state) {
     return Container(
       alignment: Alignment.center,
-      child: OrientationBuilder(
-        builder: (context, orientation) {
-          int flex = orientation==Orientation.landscape?3:2;
-          List<Widget> children = [
-            Expanded(child: Container()),
-            Expanded(child: _buildStartButton(context, state)),
-            Expanded(child: Container()),
-          ];
-          if(state.gameStarted){
+      child: OrientationBuilder(builder: (context, orientation) {
+        int flex = orientation == Orientation.landscape ? 3 : 2;
+        List<Widget> children;
+        state.maybeMap(
+          initial: (_) {
+            children = [
+              Expanded(child: Container()),
+              Expanded(child: _buildStartButton(context, state)),
+              Expanded(child: Container()),
+            ];
+          },
+          orElse: () {
             children = <Widget>[
               Expanded(child: Container()),
               Expanded(flex: flex, child: _buildYesButton(context, state)),
@@ -375,18 +567,18 @@ class _QuizPageState extends State<QuizPage> {
               Expanded(flex: flex, child: _buildNoButton(context, state)),
               Expanded(child: Container()),
             ];
-          }
-          if(orientation==Orientation.landscape){
-            return Column(
-              children: children,
-            );
-          }else{
-            return Row(
-              children: children,
-            );
-          }
+          },
+        );
+        if (orientation == Orientation.landscape) {
+          return Column(
+            children: children,
+          );
+        } else {
+          return Row(
+            children: children,
+          );
         }
-      ),
+      }),
     );
   }
 }

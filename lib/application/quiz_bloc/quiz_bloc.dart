@@ -16,7 +16,7 @@ part 'quiz_bloc.freezed.dart';
 @injectable
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final IQuestionGenerator _questionGenerator;
-  final Duration updatePeriod = const Duration(milliseconds: 100);
+  final Duration updatePeriod = const Duration(milliseconds: 50);
   final Duration responseDisplayDuration = const Duration(seconds: 1);
   StreamSubscription _timerStreamSubscription;
 
@@ -35,6 +35,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         incorrectAnswersCount: 0,
         totalAnswersCount: 0,
       );
+      await Future.delayed(Duration(seconds: 1));
+      print("Showing new question");
       showNewQuestion();
     }, onYesButtonPressed: (e) async* {
       yield state.maybeMap(
@@ -49,7 +51,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         orElse: () => state,
       );
       await Future.delayed(responseDisplayDuration);
-      yield* showNewQuestion();
+      showNewQuestion();
     }, onNoButtonPressed: (e) async* {
       yield state.maybeMap(
         showingQuestion: (showingQuestionState) {
@@ -63,7 +65,20 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         orElse: () => state,
       );
       await Future.delayed(responseDisplayDuration);
-      yield* showNewQuestion();
+      showNewQuestion();
+    }, showQuestion: (e) async* {
+      yield QuizState.showingQuestion(
+        question: e.question,
+        correctAnswersCount: e.correctAnswersCount,
+        incorrectAnswersCount: e.incorrectAnswersCount,
+        totalAnswersCount: e.totalAnswersCount,
+        timeLeft: e.timeLeft,
+        maxTimePerQuestion: _questionGenerator.maxTimePerQuestion,
+      );
+    }, timeUp: (e) async* {
+      yield timeUp();
+      await Future.delayed(responseDisplayDuration);
+      showNewQuestion();
     });
   }
 
@@ -71,25 +86,45 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     return await _questionGenerator.generateQuestion();
   }
 
-  Stream<QuizState> showNewQuestion(
-      {int correctAnswersCount = 0,
-      int incorrectAnswersCount = 0,
-      int totalAnswersCount = 0}) async* {
+  void showNewQuestion() async {
+    int correctAnswersCount = 0;
+    int incorrectAnswersCount = 0;
+    int totalAnswersCount = 0;
     Question question = await newQuestion();
     Stream timer = Stream.periodic(updatePeriod);
     Duration timeLeft = _questionGenerator.maxTimePerQuestion;
+    state.maybeMap(
+      showingQuestion: (state) {
+        correctAnswersCount = state.correctAnswersCount;
+        incorrectAnswersCount = state.incorrectAnswersCount;
+        totalAnswersCount = state.totalAnswersCount;
+      },
+      showingResponse: (state) {
+        correctAnswersCount = state.correctAnswersCount;
+        incorrectAnswersCount = state.incorrectAnswersCount;
+        totalAnswersCount = state.totalAnswersCount;
+      },
+      orElse: () {},
+    );
     _timerStreamSubscription?.cancel();
-    _timerStreamSubscription = timer.listen((_) async* {
-      yield QuizState.showingQuestion(
-        question: question,
-        correctAnswersCount: 0,
-        incorrectAnswersCount: 0,
-        totalAnswersCount: 0,
-        timeLeft: timeLeft,
-      );
+    add(QuizEvent.showQuestion(
+      question: question,
+      correctAnswersCount: correctAnswersCount,
+      incorrectAnswersCount: incorrectAnswersCount,
+      totalAnswersCount: totalAnswersCount,
+      timeLeft: timeLeft,
+    ));
+    _timerStreamSubscription = timer.listen((_) {
       timeLeft = timeLeft - updatePeriod;
+      add(QuizEvent.showQuestion(
+        question: question,
+        correctAnswersCount: correctAnswersCount,
+        incorrectAnswersCount: incorrectAnswersCount,
+        totalAnswersCount: totalAnswersCount,
+        timeLeft: timeLeft,
+      ));
       if (timeLeft <= Duration.zero) {
-        yield timeUp();
+        add(QuizEvent.timeUp());
         _timerStreamSubscription.cancel();
       }
     });
@@ -115,7 +150,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         correctAnswersCount: showingQuestionState.correctAnswersCount,
         incorrectAnswersCount: showingQuestionState.incorrectAnswersCount + 1,
         totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
-        response: Response.DoneRight,
+        response: Response.DoneWrong,
       ),
       orElse: () => state,
     );
@@ -128,7 +163,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         correctAnswersCount: showingQuestionState.correctAnswersCount,
         incorrectAnswersCount: showingQuestionState.incorrectAnswersCount,
         totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
-        response: Response.DoneRight,
+        response: Response.TimeUp,
       ),
       orElse: () => state,
     );
