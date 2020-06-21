@@ -12,5 +12,13 @@ abstract class QuizEvent with _$QuizEvent {
     @required int totalAnswersCount,
     @required Duration timeLeft,
   }) = _ShowQuestion;
+  const factory QuizEvent.showResponse({
+    @required Question question,
+    @required int correctAnswersCount,
+    @required int incorrectAnswersCount,
+    @required int totalAnswersCount,
+    @required Duration timeLeft,
+    @required Response response,
+  }) = _ShowResponse;
   const factory QuizEvent.timeUp() = _TimeUp;
 }

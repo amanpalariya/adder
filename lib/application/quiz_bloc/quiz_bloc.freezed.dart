@@ -39,6 +39,23 @@ class _$QuizEventTearOff {
     );
   }
 
+  _ShowResponse showResponse(
+      {@required Question question,
+      @required int correctAnswersCount,
+      @required int incorrectAnswersCount,
+      @required int totalAnswersCount,
+      @required Duration timeLeft,
+      @required Response response}) {
+    return _ShowResponse(
+      question: question,
+      correctAnswersCount: correctAnswersCount,
+      incorrectAnswersCount: incorrectAnswersCount,
+      totalAnswersCount: totalAnswersCount,
+      timeLeft: timeLeft,
+      response: response,
+    );
+  }
+
   _TimeUp timeUp() {
     return const _TimeUp();
   }
@@ -60,6 +77,14 @@ mixin _$QuizEvent {
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
     @required Result timeUp(),
   });
   @optionalTypeArgs
@@ -69,6 +94,13 @@ mixin _$QuizEvent {
     Result onNoButtonPressed(),
     Result showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
     Result timeUp(),
     @required Result orElse(),
   });
@@ -78,6 +110,7 @@ mixin _$QuizEvent {
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
     @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
   });
   @optionalTypeArgs
@@ -86,6 +119,7 @@ mixin _$QuizEvent {
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
     Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
     @required Result orElse(),
   });
@@ -153,12 +187,21 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
     @required Result timeUp(),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return start();
   }
@@ -171,6 +214,13 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     Result onNoButtonPressed(),
     Result showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
     Result timeUp(),
     @required Result orElse(),
   }) {
@@ -188,12 +238,14 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
     @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return start(this);
   }
@@ -205,6 +257,7 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
     Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
     @required Result orElse(),
   }) {
@@ -275,12 +328,21 @@ class _$_OnYesButtonPressed
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
     @required Result timeUp(),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return onYesButtonPressed();
   }
@@ -293,6 +355,13 @@ class _$_OnYesButtonPressed
     Result onNoButtonPressed(),
     Result showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
     Result timeUp(),
     @required Result orElse(),
   }) {
@@ -310,12 +379,14 @@ class _$_OnYesButtonPressed
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
     @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return onYesButtonPressed(this);
   }
@@ -327,6 +398,7 @@ class _$_OnYesButtonPressed
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
     Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
     @required Result orElse(),
   }) {
@@ -396,12 +468,21 @@ class _$_OnNoButtonPressed
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
     @required Result timeUp(),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return onNoButtonPressed();
   }
@@ -414,6 +495,13 @@ class _$_OnNoButtonPressed
     Result onNoButtonPressed(),
     Result showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
     Result timeUp(),
     @required Result orElse(),
   }) {
@@ -431,12 +519,14 @@ class _$_OnNoButtonPressed
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
     @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return onNoButtonPressed(this);
   }
@@ -448,6 +538,7 @@ class _$_OnNoButtonPressed
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
     Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
     @required Result orElse(),
   }) {
@@ -596,12 +687,21 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
     @required Result timeUp(),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return showQuestion(question, correctAnswersCount, incorrectAnswersCount,
         totalAnswersCount, timeLeft);
@@ -615,6 +715,13 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     Result onNoButtonPressed(),
     Result showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
     Result timeUp(),
     @required Result orElse(),
   }) {
@@ -633,12 +740,14 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
     @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return showQuestion(this);
   }
@@ -650,6 +759,7 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
     Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
     @required Result orElse(),
   }) {
@@ -675,6 +785,253 @@ abstract class _ShowQuestion implements QuizEvent {
   int get totalAnswersCount;
   Duration get timeLeft;
   _$ShowQuestionCopyWith<_ShowQuestion> get copyWith;
+}
+
+abstract class _$ShowResponseCopyWith<$Res> {
+  factory _$ShowResponseCopyWith(
+          _ShowResponse value, $Res Function(_ShowResponse) then) =
+      __$ShowResponseCopyWithImpl<$Res>;
+  $Res call(
+      {Question question,
+      int correctAnswersCount,
+      int incorrectAnswersCount,
+      int totalAnswersCount,
+      Duration timeLeft,
+      Response response});
+}
+
+class __$ShowResponseCopyWithImpl<$Res> extends _$QuizEventCopyWithImpl<$Res>
+    implements _$ShowResponseCopyWith<$Res> {
+  __$ShowResponseCopyWithImpl(
+      _ShowResponse _value, $Res Function(_ShowResponse) _then)
+      : super(_value, (v) => _then(v as _ShowResponse));
+
+  @override
+  _ShowResponse get _value => super._value as _ShowResponse;
+
+  @override
+  $Res call({
+    Object question = freezed,
+    Object correctAnswersCount = freezed,
+    Object incorrectAnswersCount = freezed,
+    Object totalAnswersCount = freezed,
+    Object timeLeft = freezed,
+    Object response = freezed,
+  }) {
+    return _then(_ShowResponse(
+      question: question == freezed ? _value.question : question as Question,
+      correctAnswersCount: correctAnswersCount == freezed
+          ? _value.correctAnswersCount
+          : correctAnswersCount as int,
+      incorrectAnswersCount: incorrectAnswersCount == freezed
+          ? _value.incorrectAnswersCount
+          : incorrectAnswersCount as int,
+      totalAnswersCount: totalAnswersCount == freezed
+          ? _value.totalAnswersCount
+          : totalAnswersCount as int,
+      timeLeft: timeLeft == freezed ? _value.timeLeft : timeLeft as Duration,
+      response: response == freezed ? _value.response : response as Response,
+    ));
+  }
+}
+
+class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
+  const _$_ShowResponse(
+      {@required this.question,
+      @required this.correctAnswersCount,
+      @required this.incorrectAnswersCount,
+      @required this.totalAnswersCount,
+      @required this.timeLeft,
+      @required this.response})
+      : assert(question != null),
+        assert(correctAnswersCount != null),
+        assert(incorrectAnswersCount != null),
+        assert(totalAnswersCount != null),
+        assert(timeLeft != null),
+        assert(response != null);
+
+  @override
+  final Question question;
+  @override
+  final int correctAnswersCount;
+  @override
+  final int incorrectAnswersCount;
+  @override
+  final int totalAnswersCount;
+  @override
+  final Duration timeLeft;
+  @override
+  final Response response;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'QuizEvent.showResponse(question: $question, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, timeLeft: $timeLeft, response: $response)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'QuizEvent.showResponse'))
+      ..add(DiagnosticsProperty('question', question))
+      ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
+      ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
+      ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount))
+      ..add(DiagnosticsProperty('timeLeft', timeLeft))
+      ..add(DiagnosticsProperty('response', response));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ShowResponse &&
+            (identical(other.question, question) ||
+                const DeepCollectionEquality()
+                    .equals(other.question, question)) &&
+            (identical(other.correctAnswersCount, correctAnswersCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.correctAnswersCount, correctAnswersCount)) &&
+            (identical(other.incorrectAnswersCount, incorrectAnswersCount) ||
+                const DeepCollectionEquality().equals(
+                    other.incorrectAnswersCount, incorrectAnswersCount)) &&
+            (identical(other.totalAnswersCount, totalAnswersCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalAnswersCount, totalAnswersCount)) &&
+            (identical(other.timeLeft, timeLeft) ||
+                const DeepCollectionEquality()
+                    .equals(other.timeLeft, timeLeft)) &&
+            (identical(other.response, response) ||
+                const DeepCollectionEquality()
+                    .equals(other.response, response)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(question) ^
+      const DeepCollectionEquality().hash(correctAnswersCount) ^
+      const DeepCollectionEquality().hash(incorrectAnswersCount) ^
+      const DeepCollectionEquality().hash(totalAnswersCount) ^
+      const DeepCollectionEquality().hash(timeLeft) ^
+      const DeepCollectionEquality().hash(response);
+
+  @override
+  _$ShowResponseCopyWith<_ShowResponse> get copyWith =>
+      __$ShowResponseCopyWithImpl<_ShowResponse>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result start(),
+    @required Result onYesButtonPressed(),
+    @required Result onNoButtonPressed(),
+    @required
+        Result showQuestion(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
+    @required Result timeUp(),
+  }) {
+    assert(start != null);
+    assert(onYesButtonPressed != null);
+    assert(onNoButtonPressed != null);
+    assert(showQuestion != null);
+    assert(showResponse != null);
+    assert(timeUp != null);
+    return showResponse(question, correctAnswersCount, incorrectAnswersCount,
+        totalAnswersCount, timeLeft, response);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result start(),
+    Result onYesButtonPressed(),
+    Result onNoButtonPressed(),
+    Result showQuestion(Question question, int correctAnswersCount,
+        int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
+    Result timeUp(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (showResponse != null) {
+      return showResponse(question, correctAnswersCount, incorrectAnswersCount,
+          totalAnswersCount, timeLeft, response);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result start(_Start value),
+    @required Result onYesButtonPressed(_OnYesButtonPressed value),
+    @required Result onNoButtonPressed(_OnNoButtonPressed value),
+    @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
+    @required Result timeUp(_TimeUp value),
+  }) {
+    assert(start != null);
+    assert(onYesButtonPressed != null);
+    assert(onNoButtonPressed != null);
+    assert(showQuestion != null);
+    assert(showResponse != null);
+    assert(timeUp != null);
+    return showResponse(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result start(_Start value),
+    Result onYesButtonPressed(_OnYesButtonPressed value),
+    Result onNoButtonPressed(_OnNoButtonPressed value),
+    Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
+    Result timeUp(_TimeUp value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (showResponse != null) {
+      return showResponse(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ShowResponse implements QuizEvent {
+  const factory _ShowResponse(
+      {@required Question question,
+      @required int correctAnswersCount,
+      @required int incorrectAnswersCount,
+      @required int totalAnswersCount,
+      @required Duration timeLeft,
+      @required Response response}) = _$_ShowResponse;
+
+  Question get question;
+  int get correctAnswersCount;
+  int get incorrectAnswersCount;
+  int get totalAnswersCount;
+  Duration get timeLeft;
+  Response get response;
+  _$ShowResponseCopyWith<_ShowResponse> get copyWith;
 }
 
 abstract class _$TimeUpCopyWith<$Res> {
@@ -726,12 +1083,21 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
     @required Result timeUp(),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return timeUp();
   }
@@ -744,6 +1110,13 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     Result onNoButtonPressed(),
     Result showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
     Result timeUp(),
     @required Result orElse(),
   }) {
@@ -761,12 +1134,14 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
     @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
     assert(showQuestion != null);
+    assert(showResponse != null);
     assert(timeUp != null);
     return timeUp(this);
   }
@@ -778,6 +1153,7 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
     Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
     @required Result orElse(),
   }) {
@@ -830,12 +1206,16 @@ class _$QuizStateTearOff {
 
   _ShowingResponse showingResponse(
       {@required Question question,
+      @required Duration timeLeft,
+      @required Duration totalTime,
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
       @required int totalAnswersCount,
       @required Response response}) {
     return _ShowingResponse(
       question: question,
+      timeLeft: timeLeft,
+      totalTime: totalTime,
       correctAnswersCount: correctAnswersCount,
       incorrectAnswersCount: incorrectAnswersCount,
       totalAnswersCount: totalAnswersCount,
@@ -865,6 +1245,8 @@ mixin _$QuizState {
     @required
         Result showingResponse(
             Question question,
+            Duration timeLeft,
+            Duration totalTime,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
@@ -882,8 +1264,14 @@ mixin _$QuizState {
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
-    Result showingResponse(Question question, int correctAnswersCount,
-        int incorrectAnswersCount, int totalAnswersCount, Response response),
+    Result showingResponse(
+        Question question,
+        Duration timeLeft,
+        Duration totalTime,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Response response),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -1070,6 +1458,8 @@ class _$_ShowingQuestion
     @required
         Result showingResponse(
             Question question,
+            Duration timeLeft,
+            Duration totalTime,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
@@ -1096,8 +1486,14 @@ class _$_ShowingQuestion
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
-    Result showingResponse(Question question, int correctAnswersCount,
-        int incorrectAnswersCount, int totalAnswersCount, Response response),
+    Result showingResponse(
+        Question question,
+        Duration timeLeft,
+        Duration totalTime,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Response response),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1212,6 +1608,8 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     @required
         Result showingResponse(
             Question question,
+            Duration timeLeft,
+            Duration totalTime,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
@@ -1237,8 +1635,14 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
-    Result showingResponse(Question question, int correctAnswersCount,
-        int incorrectAnswersCount, int totalAnswersCount, Response response),
+    Result showingResponse(
+        Question question,
+        Duration timeLeft,
+        Duration totalTime,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Response response),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1400,6 +1804,8 @@ class _$_LoadingQuestion
     @required
         Result showingResponse(
             Question question,
+            Duration timeLeft,
+            Duration totalTime,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
@@ -1426,8 +1832,14 @@ class _$_LoadingQuestion
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
-    Result showingResponse(Question question, int correctAnswersCount,
-        int incorrectAnswersCount, int totalAnswersCount, Response response),
+    Result showingResponse(
+        Question question,
+        Duration timeLeft,
+        Duration totalTime,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Response response),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1488,6 +1900,8 @@ abstract class _$ShowingResponseCopyWith<$Res> {
       __$ShowingResponseCopyWithImpl<$Res>;
   $Res call(
       {Question question,
+      Duration timeLeft,
+      Duration totalTime,
       int correctAnswersCount,
       int incorrectAnswersCount,
       int totalAnswersCount,
@@ -1506,6 +1920,8 @@ class __$ShowingResponseCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object question = freezed,
+    Object timeLeft = freezed,
+    Object totalTime = freezed,
     Object correctAnswersCount = freezed,
     Object incorrectAnswersCount = freezed,
     Object totalAnswersCount = freezed,
@@ -1513,6 +1929,9 @@ class __$ShowingResponseCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
   }) {
     return _then(_ShowingResponse(
       question: question == freezed ? _value.question : question as Question,
+      timeLeft: timeLeft == freezed ? _value.timeLeft : timeLeft as Duration,
+      totalTime:
+          totalTime == freezed ? _value.totalTime : totalTime as Duration,
       correctAnswersCount: correctAnswersCount == freezed
           ? _value.correctAnswersCount
           : correctAnswersCount as int,
@@ -1532,11 +1951,15 @@ class _$_ShowingResponse
     implements _ShowingResponse {
   _$_ShowingResponse(
       {@required this.question,
+      @required this.timeLeft,
+      @required this.totalTime,
       @required this.correctAnswersCount,
       @required this.incorrectAnswersCount,
       @required this.totalAnswersCount,
       @required this.response})
       : assert(question != null),
+        assert(timeLeft != null),
+        assert(totalTime != null),
         assert(correctAnswersCount != null),
         assert(incorrectAnswersCount != null),
         assert(totalAnswersCount != null),
@@ -1544,6 +1967,10 @@ class _$_ShowingResponse
 
   @override
   final Question question;
+  @override
+  final Duration timeLeft;
+  @override
+  final Duration totalTime;
   @override
   final int correctAnswersCount;
   @override
@@ -1555,7 +1982,7 @@ class _$_ShowingResponse
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.showingResponse(question: $question, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, response: $response)';
+    return 'QuizState.showingResponse(question: $question, timeLeft: $timeLeft, totalTime: $totalTime, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, response: $response)';
   }
 
   @override
@@ -1564,6 +1991,8 @@ class _$_ShowingResponse
     properties
       ..add(DiagnosticsProperty('type', 'QuizState.showingResponse'))
       ..add(DiagnosticsProperty('question', question))
+      ..add(DiagnosticsProperty('timeLeft', timeLeft))
+      ..add(DiagnosticsProperty('totalTime', totalTime))
       ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
       ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
       ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount))
@@ -1577,6 +2006,12 @@ class _$_ShowingResponse
             (identical(other.question, question) ||
                 const DeepCollectionEquality()
                     .equals(other.question, question)) &&
+            (identical(other.timeLeft, timeLeft) ||
+                const DeepCollectionEquality()
+                    .equals(other.timeLeft, timeLeft)) &&
+            (identical(other.totalTime, totalTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalTime, totalTime)) &&
             (identical(other.correctAnswersCount, correctAnswersCount) ||
                 const DeepCollectionEquality()
                     .equals(other.correctAnswersCount, correctAnswersCount)) &&
@@ -1595,6 +2030,8 @@ class _$_ShowingResponse
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(question) ^
+      const DeepCollectionEquality().hash(timeLeft) ^
+      const DeepCollectionEquality().hash(totalTime) ^
       const DeepCollectionEquality().hash(correctAnswersCount) ^
       const DeepCollectionEquality().hash(incorrectAnswersCount) ^
       const DeepCollectionEquality().hash(totalAnswersCount) ^
@@ -1622,6 +2059,8 @@ class _$_ShowingResponse
     @required
         Result showingResponse(
             Question question,
+            Duration timeLeft,
+            Duration totalTime,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
@@ -1631,8 +2070,8 @@ class _$_ShowingResponse
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
-    return showingResponse(question, correctAnswersCount, incorrectAnswersCount,
-        totalAnswersCount, response);
+    return showingResponse(question, timeLeft, totalTime, correctAnswersCount,
+        incorrectAnswersCount, totalAnswersCount, response);
   }
 
   @override
@@ -1648,13 +2087,19 @@ class _$_ShowingResponse
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
-    Result showingResponse(Question question, int correctAnswersCount,
-        int incorrectAnswersCount, int totalAnswersCount, Response response),
+    Result showingResponse(
+        Question question,
+        Duration timeLeft,
+        Duration totalTime,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Response response),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (showingResponse != null) {
-      return showingResponse(question, correctAnswersCount,
+      return showingResponse(question, timeLeft, totalTime, correctAnswersCount,
           incorrectAnswersCount, totalAnswersCount, response);
     }
     return orElse();
@@ -1695,12 +2140,16 @@ class _$_ShowingResponse
 abstract class _ShowingResponse implements QuizState {
   factory _ShowingResponse(
       {@required Question question,
+      @required Duration timeLeft,
+      @required Duration totalTime,
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
       @required int totalAnswersCount,
       @required Response response}) = _$_ShowingResponse;
 
   Question get question;
+  Duration get timeLeft;
+  Duration get totalTime;
   int get correctAnswersCount;
   int get incorrectAnswersCount;
   int get totalAnswersCount;

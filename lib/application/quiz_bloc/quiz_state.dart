@@ -23,6 +23,8 @@ abstract class QuizState with _$QuizState {
 
   factory QuizState.showingResponse({
     @required Question question,
+    @required Duration timeLeft,
+    @required Duration totalTime,
     @required int correctAnswersCount,
     @required int incorrectAnswersCount,
     @required int totalAnswersCount,

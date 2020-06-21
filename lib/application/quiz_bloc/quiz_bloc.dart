@@ -16,7 +16,7 @@ part 'quiz_bloc.freezed.dart';
 @injectable
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final IQuestionGenerator _questionGenerator;
-  final Duration updatePeriod = const Duration(milliseconds: 50);
+  final Duration updatePeriod = const Duration(milliseconds: 10);
   final Duration responseDisplayDuration = const Duration(seconds: 1);
   StreamSubscription _timerStreamSubscription;
 
@@ -29,64 +29,73 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   Stream<QuizState> mapEventToState(
     QuizEvent event,
   ) async* {
-    yield* event.map(start: (e) async* {
-      yield QuizState.loadingQuestion(
-        correctAnswersCount: 0,
-        incorrectAnswersCount: 0,
-        totalAnswersCount: 0,
-      );
-      await Future.delayed(Duration(seconds: 1));
-      print("Showing new question");
-      showNewQuestion();
-    }, onYesButtonPressed: (e) async* {
-      yield state.maybeMap(
-        showingQuestion: (showingQuestionState) {
-          _timerStreamSubscription?.cancel();
-          if (showingQuestionState.question.isTrue) {
-            return correctResponse();
-          } else {
-            return incorrectResponse();
-          }
-        },
-        orElse: () => state,
-      );
-      await Future.delayed(responseDisplayDuration);
-      showNewQuestion();
-    }, onNoButtonPressed: (e) async* {
-      yield state.maybeMap(
-        showingQuestion: (showingQuestionState) {
-          _timerStreamSubscription?.cancel();
-          if (!showingQuestionState.question.isTrue) {
-            return correctResponse();
-          } else {
-            return incorrectResponse();
-          }
-        },
-        orElse: () => state,
-      );
-      await Future.delayed(responseDisplayDuration);
-      showNewQuestion();
-    }, showQuestion: (e) async* {
-      yield QuizState.showingQuestion(
-        question: e.question,
-        correctAnswersCount: e.correctAnswersCount,
-        incorrectAnswersCount: e.incorrectAnswersCount,
-        totalAnswersCount: e.totalAnswersCount,
-        timeLeft: e.timeLeft,
-        maxTimePerQuestion: _questionGenerator.maxTimePerQuestion,
-      );
-    }, timeUp: (e) async* {
-      yield timeUp();
-      await Future.delayed(responseDisplayDuration);
-      showNewQuestion();
-    });
+    yield* event.map(
+      start: (e) async* {
+        yield QuizState.loadingQuestion(
+          correctAnswersCount: 0,
+          incorrectAnswersCount: 0,
+          totalAnswersCount: 0,
+        );
+        yieldNewQuestionState();
+      },
+      onYesButtonPressed: (e) async* {
+        state.maybeMap(
+          showingQuestion: (showingQuestionState) {
+            _timerStreamSubscription?.cancel();
+            if (showingQuestionState.question.isTrue) {
+              correctResponse().then((_) => yieldNewQuestionState());
+            } else {
+              incorrectResponse().then((_) => yieldNewQuestionState());
+            }
+          },
+          orElse: () => state,
+        );
+      },
+      onNoButtonPressed: (e) async* {
+        state.maybeMap(
+          showingQuestion: (showingQuestionState) {
+            _timerStreamSubscription?.cancel();
+            if (!showingQuestionState.question.isTrue) {
+              correctResponse().then((_) => yieldNewQuestionState());
+            } else {
+              incorrectResponse().then((_) => yieldNewQuestionState());
+            }
+          },
+          orElse: () => state,
+        );
+      },
+      timeUp: (e) async* {
+        timeUp().then((_) => yieldNewQuestionState());
+      },
+      showQuestion: (e) async* {
+        yield QuizState.showingQuestion(
+          question: e.question,
+          correctAnswersCount: e.correctAnswersCount,
+          incorrectAnswersCount: e.incorrectAnswersCount,
+          totalAnswersCount: e.totalAnswersCount,
+          timeLeft: e.timeLeft,
+          maxTimePerQuestion: _questionGenerator.maxTimePerQuestion,
+        );
+      },
+      showResponse: (event) async* {
+        yield QuizState.showingResponse(
+          question: event.question,
+          correctAnswersCount: event.correctAnswersCount,
+          incorrectAnswersCount: event.incorrectAnswersCount,
+          totalAnswersCount: event.totalAnswersCount,
+          timeLeft: event.timeLeft,
+          totalTime: responseDisplayDuration,
+          response: event.response,
+        );
+      },
+    );
   }
 
   Future<Question> newQuestion() async {
     return await _questionGenerator.generateQuestion();
   }
 
-  void showNewQuestion() async {
+  void yieldNewQuestionState() async {
     int correctAnswersCount = 0;
     int incorrectAnswersCount = 0;
     int totalAnswersCount = 0;
@@ -130,41 +139,83 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     });
   }
 
-  QuizState correctResponse() {
-    return state.maybeMap(
-      showingQuestion: (showingQuestionState) => QuizState.showingResponse(
-        question: showingQuestionState.question,
-        correctAnswersCount: showingQuestionState.correctAnswersCount + 1,
-        incorrectAnswersCount: showingQuestionState.incorrectAnswersCount,
-        totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
-        response: Response.DoneRight,
-      ),
+  Future yieldResponseState(Response response) async {
+    Completer completer = Completer();
+    int correctAnswersCount;
+    int incorrectAnswersCount;
+    int totalAnswersCount;
+    Question question;
+    Stream timer = Stream.periodic(updatePeriod);
+    Duration timeLeft = responseDisplayDuration;
+    state.maybeMap(
+      showingQuestion: (state) {
+        question = state.question;
+        correctAnswersCount = state.correctAnswersCount +
+            (response == Response.DoneRight ? 1 : 0);
+        incorrectAnswersCount = state.incorrectAnswersCount +
+            (response == Response.DoneWrong ? 1 : 0);
+        totalAnswersCount = state.totalAnswersCount + 1;
+      },
+      showingResponse: (state) {
+        question = state.question;
+        correctAnswersCount = state.correctAnswersCount;
+        incorrectAnswersCount = state.incorrectAnswersCount;
+        totalAnswersCount = state.totalAnswersCount;
+      },
+      orElse: () {
+        correctAnswersCount = 0;
+        incorrectAnswersCount = 0;
+        totalAnswersCount = 0;
+      },
+    );
+    _timerStreamSubscription?.cancel();
+    add(QuizEvent.showResponse(
+      question: question,
+      correctAnswersCount: correctAnswersCount,
+      incorrectAnswersCount: incorrectAnswersCount,
+      totalAnswersCount: totalAnswersCount,
+      timeLeft: timeLeft,
+      response: response,
+    ));
+    _timerStreamSubscription = timer.listen((_) {
+      timeLeft = timeLeft - updatePeriod;
+      add(QuizEvent.showResponse(
+        question: question,
+        correctAnswersCount: correctAnswersCount,
+        incorrectAnswersCount: incorrectAnswersCount,
+        totalAnswersCount: totalAnswersCount,
+        timeLeft: timeLeft,
+        response: response,
+      ));
+      if (timeLeft <= Duration.zero) {
+        completer.complete();
+        _timerStreamSubscription.cancel();
+      }
+    });
+    return completer.future;
+  }
+
+  Future<void> correctResponse() async {
+    await state.maybeMap(
+      showingQuestion: (showingQuestionState) async =>
+          await yieldResponseState(Response.DoneRight),
       orElse: () => state,
     );
   }
 
-  QuizState incorrectResponse() {
-    return state.maybeMap(
-      showingQuestion: (showingQuestionState) => QuizState.showingResponse(
-        question: showingQuestionState.question,
-        correctAnswersCount: showingQuestionState.correctAnswersCount,
-        incorrectAnswersCount: showingQuestionState.incorrectAnswersCount + 1,
-        totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
-        response: Response.DoneWrong,
-      ),
+  Future<void> incorrectResponse() async {
+    await state.maybeMap(
+      showingQuestion: (showingQuestionState) async =>
+          await yieldResponseState(Response.DoneWrong),
       orElse: () => state,
     );
   }
 
-  QuizState timeUp() {
-    return state.maybeMap(
-      showingQuestion: (showingQuestionState) => QuizState.showingResponse(
-        question: showingQuestionState.question,
-        correctAnswersCount: showingQuestionState.correctAnswersCount,
-        incorrectAnswersCount: showingQuestionState.incorrectAnswersCount,
-        totalAnswersCount: showingQuestionState.totalAnswersCount + 1,
-        response: Response.TimeUp,
-      ),
+  Future<void> timeUp() async {
+    await state.maybeMap(
+      showingQuestion: (showingQuestionState) async {
+        return yieldResponseState(Response.TimeUp);
+      },
       orElse: () => state,
     );
   }

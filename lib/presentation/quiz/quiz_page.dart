@@ -54,7 +54,7 @@ class _QuizPageState extends State<QuizPage> {
       return Column(
         children: <Widget>[
           Container(
-            child: _buildAppBar(),
+            child: _buildAppBar(state),
           ),
           Expanded(
             child: OrientationBuilder(builder: (context, orientation) {
@@ -117,35 +117,41 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Row _buildActionsRow() {
+  Row _buildActionsRow(QuizState state) {
     List<IconButton> buttons = [];
-    buttons.add(_makeActionButton(
-        icon: Icon(Icons.info_outline),
-        tooltip: "About",
-        onPressed: () {
-          showAboutDialog(
-            context: context,
-            applicationIcon: Image.asset(
-              'assets/logo/ic_launcher.png',
-              scale: 3,
-            ),
-            applicationName: "Adder",
-            applicationVersion: "1.0.0",
-            children: [
-              Text(
-                  'A game that helps you practice your addition skills. Spend time with this app and you will be rewarded.'),
-            ],
-          );
-        }));
+    state.maybeMap(initial: (state) {
+      buttons = [
+        _makeActionButton(
+            icon: Icon(Icons.info_outline),
+            tooltip: "About",
+            onPressed: () {
+              showAboutDialog(
+                context: context,
+                applicationIcon: Image.asset(
+                  'assets/logo/ic_launcher.png',
+                  scale: 3,
+                ),
+                applicationName: "Adder",
+                applicationVersion: "1.0.0",
+                children: [
+                  Text(
+                      'A game that helps you practice your addition skills. Spend time with this app and you will be rewarded.'),
+                ],
+              );
+            })
+      ];
+    }, orElse: () {
+      buttons = [];
+    });
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: buttons,
     );
   }
 
-  Row _buildTitleRow() {
+  Row _buildTitleRow(QuizState state) {
     Widget titleWidget = _buildTitle();
-    Row actions = _buildActionsRow();
+    Row actions = _buildActionsRow(state);
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,7 +162,7 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildAppBar() {
+  Widget _buildAppBar(QuizState state) {
     EdgeInsetsGeometry padding =
         const EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0);
     return Material(
@@ -164,7 +170,7 @@ class _QuizPageState extends State<QuizPage> {
       child: SafeArea(
         child: Padding(
           padding: padding,
-          child: _buildTitleRow(),
+          child: _buildTitleRow(state),
         ),
       ),
     );
@@ -336,8 +342,15 @@ class _QuizPageState extends State<QuizPage> {
     return "${seconds.toStringAsFixed(2)}";
   }
 
-  Widget _buildQuestionContent(Question question, Duration timeLeft, Duration maxTimePerQuestion) {
+  Widget _buildQuestionContent(
+      Question question, Duration timeLeft, Duration maxTimePerQuestion) {
     const double padding = 16.0;
+    MaterialColor timeColors = Colors.green;
+    if (timeLeft.inSeconds < 5 && timeLeft.inSeconds > 2) {
+      timeColors = Colors.yellow;
+    } else if (timeLeft.inSeconds <= 2) {
+      timeColors = Colors.red;
+    }
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -376,15 +389,19 @@ class _QuizPageState extends State<QuizPage> {
         //     fontSize: 16,
         //   ),
         // ),
-        LinearProgressIndicator(
-          // backgroundColor: timeColor,
-          value: timeLeft.inMilliseconds / maxTimePerQuestion.inMilliseconds,
+        Theme(
+          data: ThemeData(primarySwatch: timeColors),
+          child: LinearProgressIndicator(
+            // backgroundColor: timeColor,
+            value: timeLeft.inMilliseconds / maxTimePerQuestion.inMilliseconds,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildResponseContent(Question question, Response response) {
+  Widget _buildResponseContent(Question question, Response response,
+      Duration timeLeft, Duration totalTime) {
     Color signalColor;
     switch (response) {
       case Response.DoneRight:
@@ -432,6 +449,15 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
+        Theme(
+          data: ThemeData(primarySwatch: Colors.grey),
+          child: Opacity(
+            opacity: 0.3,
+            child: LinearProgressIndicator(
+              value: timeLeft.inMilliseconds / totalTime.inMilliseconds,
+            ),
+          ),
+        )
       ],
     );
   }
@@ -442,10 +468,10 @@ class _QuizPageState extends State<QuizPage> {
     child = state.map(
       initial: (state) => _buildStartScreen(),
       loadingQuestion: (state) => _buildLoading(),
-      showingQuestion: (state) =>
-          _buildQuestionContent(state.question, state.timeLeft, state.maxTimePerQuestion),
-      showingResponse: (state) =>
-          _buildResponseContent(state.question, state.response),
+      showingQuestion: (state) => _buildQuestionContent(
+          state.question, state.timeLeft, state.maxTimePerQuestion),
+      showingResponse: (state) => _buildResponseContent(
+          state.question, state.response, state.timeLeft, state.totalTime),
     );
     return Material(
       shape: RoundedRectangleBorder(
