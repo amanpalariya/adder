@@ -9,6 +9,7 @@ class AppWidget extends StatelessWidget {
         fontFamily: 'Montserrat',
       ),
       debugShowCheckedModeBanner: false,
+      themeMode: ThemeMode.system,
       home: QuizWidget(),
     );
   }
