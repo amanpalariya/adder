@@ -349,11 +349,11 @@ class _QuizPageState extends State<QuizPage> {
   Widget _buildQuestionContent(
       Question question, Duration timeLeft, Duration maxTimePerQuestion) {
     const double padding = 16.0;
-    MaterialColor timeColors = Colors.green;
+    MaterialColor timeColors = myTheme.highTimeRemainingColor;
     if (timeLeft.inSeconds < 5 && timeLeft.inSeconds > 2) {
-      timeColors = Colors.yellow;
+      timeColors = myTheme.mediumTimeRemainingColor;
     } else if (timeLeft.inSeconds <= 2) {
-      timeColors = Colors.red;
+      timeColors = myTheme.lowTimeRemainingColor;
     }
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -409,16 +409,16 @@ class _QuizPageState extends State<QuizPage> {
     Color signalColor;
     switch (response) {
       case Response.DoneRight:
-        signalColor = Colors.green;
+        signalColor = myTheme.correctAnswerColor;
         break;
       case Response.DoneWrong:
-        signalColor = Colors.red;
+        signalColor = myTheme.incorrectAnswerColor;
         break;
       case Response.TimeUp:
-        signalColor = Colors.blue;
+        signalColor = myTheme.missedAnswerColor;
         break;
       default:
-        signalColor = Colors.black;
+        signalColor = myTheme.primaryTextColor;
     }
     const double padding = 16.0;
     return Column(
@@ -454,7 +454,7 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Theme(
-          data: ThemeData(primarySwatch: Colors.grey),
+          data: ThemeData(primarySwatch: myTheme.lessImportantTimeRemainingColor, brightness: myTheme.brightness),
           child: Opacity(
             opacity: 0.3,
             child: LinearProgressIndicator(
@@ -496,7 +496,7 @@ class _QuizPageState extends State<QuizPage> {
     bool enabled = true,
   }) {
     EdgeInsetsGeometry padding = EdgeInsets.all(8.0);
-    color = enabled && color != null ? color : myTheme.primaryTextColor;
+    color = enabled && color != null ? color : myTheme.secondaryTextColor;
     onTap = enabled ? onTap : null;
     Color iconColor = color;
     //Color textColor = enabled?Colors.grey[700]:Colors.grey[300];
