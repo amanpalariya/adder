@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:adder_game/domain/game_settings.dart';
 import 'package:adder_game/domain/i_question_generator.dart';
 import 'package:adder_game/domain/question.dart';
 import 'package:bloc/bloc.dart';
@@ -16,11 +17,11 @@ part 'quiz_bloc.freezed.dart';
 @injectable
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final IQuestionGenerator _questionGenerator;
-  final Duration updatePeriod = const Duration(milliseconds: 10);
-  final Duration responseDisplayDuration = const Duration(seconds: 1);
+  final GameSettings gameSettings;
+  final Duration refreshRate = const Duration(milliseconds: 10);
   StreamSubscription _timerStreamSubscription;
 
-  QuizBloc(this._questionGenerator);
+  QuizBloc(this._questionGenerator, {@required this.gameSettings});
 
   @override
   QuizState get initialState => QuizState.initial();
@@ -74,7 +75,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           incorrectAnswersCount: e.incorrectAnswersCount,
           totalAnswersCount: e.totalAnswersCount,
           timeLeft: e.timeLeft,
-          maxTimePerQuestion: _questionGenerator.maxTimePerQuestion,
+          maxTimePerQuestion: gameSettings.maxTimePerQuestion,
         );
       },
       showResponse: (event) async* {
@@ -84,7 +85,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           incorrectAnswersCount: event.incorrectAnswersCount,
           totalAnswersCount: event.totalAnswersCount,
           timeLeft: event.timeLeft,
-          totalTime: responseDisplayDuration,
+          totalTime: gameSettings.responseDisplayDuration,
           response: event.response,
         );
       },
@@ -92,7 +93,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   }
 
   Future<Question> newQuestion() async {
-    return await _questionGenerator.generateQuestion();
+    return await _questionGenerator.generateQuestionOfDifficulty(gameSettings.difficulty);
   }
 
   void yieldNewQuestionState() async {
@@ -100,8 +101,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     int incorrectAnswersCount = 0;
     int totalAnswersCount = 0;
     Question question = await newQuestion();
-    Stream timer = Stream.periodic(updatePeriod);
-    Duration timeLeft = _questionGenerator.maxTimePerQuestion;
+    Stream timer = Stream.periodic(refreshRate);
+    Duration timeLeft = gameSettings.maxTimePerQuestion;
     state.maybeMap(
       showingQuestion: (state) {
         correctAnswersCount = state.correctAnswersCount;
@@ -124,7 +125,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       timeLeft: timeLeft,
     ));
     _timerStreamSubscription = timer.listen((_) {
-      timeLeft = timeLeft - updatePeriod;
+      timeLeft = timeLeft - refreshRate;
       add(QuizEvent.showQuestion(
         question: question,
         correctAnswersCount: correctAnswersCount,
@@ -145,8 +146,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     int incorrectAnswersCount;
     int totalAnswersCount;
     Question question;
-    Stream timer = Stream.periodic(updatePeriod);
-    Duration timeLeft = responseDisplayDuration;
+    Stream timer = Stream.periodic(refreshRate);
+    Duration timeLeft = gameSettings.responseDisplayDuration;
     state.maybeMap(
       showingQuestion: (state) {
         question = state.question;
@@ -178,7 +179,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       response: response,
     ));
     _timerStreamSubscription = timer.listen((_) {
-      timeLeft = timeLeft - updatePeriod;
+      timeLeft = timeLeft - refreshRate;
       add(QuizEvent.showResponse(
         question: question,
         correctAnswersCount: correctAnswersCount,

@@ -1,3 +1,4 @@
+import 'package:adder_game/domain/game_settings.dart';
 import 'package:adder_game/domain/i_question_generator.dart';
 import 'package:adder_game/domain/question.dart';
 import 'package:adder_game/infrastructure/core/random_generator.dart';
@@ -12,13 +13,36 @@ class ToughQuestionGenerator implements IQuestionGenerator {
 
   ToughQuestionGenerator(this._randomGenerator);
 
-  int _getRandomNumber() {
+  int _getRandomNumber(GameDifficulty difficulty) {
     int max = 50;
+    switch(difficulty){
+      case GameDifficulty.Easy:
+        max = 9;
+        break;
+      case GameDifficulty.Medium:
+        max = 30;
+        break;
+      case GameDifficulty.Hard:
+        max = 50;
+        break;
+    }
     return _randomGenerator.getRandomIntegerBetween(-max - 1, max + 1);
   }
 
-  int _numberOfOperands() {
-    return _randomGenerator.getRandomIntegerBetween(1, 5);
+  int _numberOfOperands(GameDifficulty difficulty) {
+    int maxOperands = 2;
+    switch(difficulty){
+      case GameDifficulty.Easy:
+        maxOperands = 2;
+        break;
+      case GameDifficulty.Medium:
+        maxOperands = 4;
+        break;
+      case GameDifficulty.Hard:
+        maxOperands = 6;
+        break;
+    }
+    return _randomGenerator.getRandomIntegerBetween(2, maxOperands);
   }
 
   int _getConfusingAnswer(List<int> operands) {
@@ -49,12 +73,12 @@ class ToughQuestionGenerator implements IQuestionGenerator {
   }
 
   @override
-  Future<Question> generateQuestion() async {
+  Future<Question> generateQuestionOfDifficulty(GameDifficulty difficulty) async {
     List<int> operands = [];
-    int numberOfOperands = _numberOfOperands();
+    int numberOfOperands = _numberOfOperands(difficulty);
     int correctAnswer = 0;
     for (int i = 0; i < numberOfOperands; i++) {
-      int operand = _getRandomNumber();
+      int operand = _getRandomNumber(difficulty);
       operands.add(operand);
       correctAnswer += operand;
     }
@@ -66,7 +90,4 @@ class ToughQuestionGenerator implements IQuestionGenerator {
       maybeAnswer: maybeWrongAnswer,
     );
   }
-
-  @override
-  Duration get maxTimePerQuestion => const Duration(milliseconds: 8000);
 }

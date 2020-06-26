@@ -1,3 +1,4 @@
+import 'package:adder_game/domain/game_settings.dart';
 import 'package:adder_game/domain/i_question_generator.dart';
 import 'package:adder_game/domain/question.dart';
 import 'package:adder_game/infrastructure/core/random_generator.dart';
@@ -31,7 +32,7 @@ class SimpleQuestionGenerator implements IQuestionGenerator {
   }
 
   @override
-  Future<Question> generateQuestion() async {
+  Future<Question> generateQuestionOfDifficulty(GameDifficulty difficulty) async {
     int operand1 = _getRandomNumber();
     int operand2 = _getRandomNumber();
     int correctAnswer = operand1 + operand2;
@@ -44,7 +45,4 @@ class SimpleQuestionGenerator implements IQuestionGenerator {
       maybeAnswer: maybeWrongAnswer,
     );
   }
-
-  @override
-  Duration get maxTimePerQuestion => const Duration(milliseconds: 10000);
 }
