@@ -1,7 +1,9 @@
 import 'package:adder_game/application/quiz_bloc/quiz_bloc.dart';
 import 'package:adder_game/domain/question.dart';
+import 'package:adder_game/presentation/core/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import './theme.dart';
 
 class QuizPage extends StatefulWidget {
   @override
@@ -9,6 +11,8 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  MyTheme myTheme;
+
   @override
   void initState() {
     super.initState();
@@ -16,6 +20,7 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
+    myTheme = MyTheme.fromTheme(Theme.of(context));
     return BlocConsumer<QuizBloc, QuizState>(listener: (context, state) {
       // state.map(
       //   initial: (state) {
@@ -101,7 +106,7 @@ class _QuizPageState extends State<QuizPage> {
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Colors.grey[800],
+            color: myTheme.primaryTextColor,
           ),
         ),
       ],
@@ -113,12 +118,12 @@ class _QuizPageState extends State<QuizPage> {
       icon: icon,
       tooltip: tooltip,
       onPressed: onPressed ?? () {},
-      color: Colors.grey[500],
+      color: myTheme.appBarActionIconColor,
     );
   }
 
   Row _buildActionsRow(QuizState state) {
-    List<IconButton> buttons = [];
+    List<Widget> buttons = [];
     state.maybeMap(initial: (state) {
       buttons = [
         _makeActionButton(
@@ -143,9 +148,36 @@ class _QuizPageState extends State<QuizPage> {
     }, orElse: () {
       buttons = [];
     });
+    buttons.add(_buildThemeChangeMenu());
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: buttons,
+    );
+  }
+
+  Widget _buildThemeChangeMenu() {
+    return PopupMenuButton(
+      child: Icon(Icons.color_lens, color: myTheme.appBarActionIconColor),
+      tooltip: "Change theme",
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            child: Text("System"),
+            value: ThemeMode.system,
+          ),
+          PopupMenuItem(
+            child: Text("Light"),
+            value: ThemeMode.light,
+          ),
+          PopupMenuItem(
+            child: Text("Dark"),
+            value: ThemeMode.dark,
+          ),
+        ];
+      },
+      onSelected: (value){
+        ThemeProvider.of(context, listen: false).changeThemeMode(value);
+      },
     );
   }
 
@@ -178,7 +210,7 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget _buildInfoColumn(
       {@required int data, String supportingText, Color color}) {
-    color = color ?? Colors.black;
+    color = color ?? myTheme.primaryTextColor;
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -215,13 +247,13 @@ class _QuizPageState extends State<QuizPage> {
           child: _buildInfoColumn(
               data: state.correctAnswersCount,
               supportingText: "Correct",
-              color: Colors.green),
+              color: myTheme.correctAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
               data: state.incorrectAnswersCount,
               supportingText: "Incorrect",
-              color: Colors.red),
+              color: myTheme.incorrectAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
@@ -229,7 +261,7 @@ class _QuizPageState extends State<QuizPage> {
                   state.correctAnswersCount -
                   state.incorrectAnswersCount,
               supportingText: "Missed",
-              color: Colors.blue),
+              color: myTheme.missedAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
@@ -243,13 +275,13 @@ class _QuizPageState extends State<QuizPage> {
           child: _buildInfoColumn(
               data: state.correctAnswersCount,
               supportingText: "Correct",
-              color: Colors.green),
+              color: myTheme.correctAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
               data: state.incorrectAnswersCount,
               supportingText: "Incorrect",
-              color: Colors.red),
+              color: myTheme.incorrectAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
@@ -257,7 +289,7 @@ class _QuizPageState extends State<QuizPage> {
                   state.correctAnswersCount -
                   state.incorrectAnswersCount,
               supportingText: "Missed",
-              color: Colors.blue),
+              color: myTheme.missedAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
@@ -271,13 +303,13 @@ class _QuizPageState extends State<QuizPage> {
           child: _buildInfoColumn(
               data: state.correctAnswersCount,
               supportingText: "Correct",
-              color: Colors.green),
+              color: myTheme.correctAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
               data: state.incorrectAnswersCount,
               supportingText: "Incorrect",
-              color: Colors.red),
+              color: myTheme.incorrectAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
@@ -285,7 +317,7 @@ class _QuizPageState extends State<QuizPage> {
                   state.correctAnswersCount -
                   state.incorrectAnswersCount,
               supportingText: "Missed",
-              color: Colors.blue),
+              color: myTheme.missedAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
@@ -344,9 +376,10 @@ class _QuizPageState extends State<QuizPage> {
     EdgeInsetsGeometry padding = const EdgeInsets.all(16.0);
     return Material(
       // color: Colors.white.withOpacity(0.05),
+      color: myTheme.cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
-        side: BorderSide(color: Colors.grey[300], width: 2),
+        side: BorderSide(color: myTheme.cardBorderColor, width: 2),
       ),
       elevation: 0,
       child: Padding(
@@ -381,11 +414,11 @@ class _QuizPageState extends State<QuizPage> {
     int totalQuestions,
   }) {
     const double padding = 16.0;
-    MaterialColor timeColors = Colors.green;
+    MaterialColor timeColors = myTheme.highTimeRemainingColor;
     if (timeLeft.inSeconds < 5 && timeLeft.inSeconds > 2) {
-      timeColors = Colors.yellow;
+      timeColors = myTheme.mediumTimeRemainingColor;
     } else if (timeLeft.inSeconds <= 2) {
-      timeColors = Colors.red;
+      timeColors = myTheme.lowTimeRemainingColor;
     }
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -400,7 +433,7 @@ class _QuizPageState extends State<QuizPage> {
           child: Text(
             "Question $questionNumber/$totalQuestions",
             style: TextStyle(
-              color: Colors.grey[500],
+              color: myTheme.secondaryTextColor,
             ),
           ),
         ),
@@ -446,16 +479,16 @@ class _QuizPageState extends State<QuizPage> {
     Color signalColor;
     switch (response) {
       case Response.DoneRight:
-        signalColor = Colors.green;
+        signalColor = myTheme.correctAnswerColor;
         break;
       case Response.DoneWrong:
-        signalColor = Colors.red;
+        signalColor = myTheme.incorrectAnswerColor;
         break;
       case Response.TimeUp:
-        signalColor = Colors.blue;
+        signalColor = myTheme.missedAnswerColor;
         break;
       default:
-        signalColor = Colors.black;
+        signalColor = myTheme.primaryTextColor;
     }
     const double padding = 16.0;
     return Column(
@@ -471,7 +504,7 @@ class _QuizPageState extends State<QuizPage> {
           child: Text(
             "Answer $questionNumber/$totalQuestions",
             style: TextStyle(
-              color: Colors.grey[500],
+              color: myTheme.secondaryTextColor,
             ),
           ),
         ),
@@ -491,7 +524,9 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Theme(
-          data: ThemeData(primarySwatch: Colors.grey),
+          data: ThemeData(
+              primarySwatch: myTheme.lessImportantTimeRemainingColor,
+              brightness: myTheme.brightness),
           child: Opacity(
             opacity: 0.3,
             child: LinearProgressIndicator(
@@ -529,9 +564,10 @@ class _QuizPageState extends State<QuizPage> {
     return Material(
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
-        side: BorderSide(color: Colors.grey[300], width: 2),
+        side: BorderSide(color: myTheme.cardBorderColor, width: 2),
       ),
       // elevation: 2.0,
+      color: myTheme.cardColor,
       clipBehavior: Clip.antiAlias,
       child: child,
     );
@@ -545,7 +581,7 @@ class _QuizPageState extends State<QuizPage> {
     bool enabled = true,
   }) {
     EdgeInsetsGeometry padding = EdgeInsets.all(8.0);
-    color = enabled && color != null ? color : Colors.grey[700];
+    color = enabled && color != null ? color : myTheme.secondaryTextColor;
     onTap = enabled ? onTap : null;
     Color iconColor = color;
     //Color textColor = enabled?Colors.grey[700]:Colors.grey[300];
@@ -557,6 +593,7 @@ class _QuizPageState extends State<QuizPage> {
         shape: CircleBorder(
           side: BorderSide(color: secondaryColor, width: 2),
         ),
+        color: myTheme.cardColor,
         // elevation: 2.0,
         // shape: CircleBorder(),
         child: InkWell(
@@ -577,7 +614,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
                 Text(
                   text,
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: TextStyle(color: myTheme.secondaryTextColor),
                 ),
               ],
             ),
@@ -596,7 +633,7 @@ class _QuizPageState extends State<QuizPage> {
       },
       enabled:
           state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
-      color: Colors.green,
+      color: myTheme.yesButtonColor,
     );
   }
 
@@ -609,7 +646,7 @@ class _QuizPageState extends State<QuizPage> {
       },
       enabled:
           state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
-      color: Colors.red,
+      color: myTheme.noButtonColor,
     );
   }
 
@@ -620,7 +657,7 @@ class _QuizPageState extends State<QuizPage> {
       onTap: () {
         context.bloc<QuizBloc>().add(QuizEvent.start());
       },
-      color: Colors.blue,
+      color: myTheme.secondaryColor,
     );
   }
   Widget _buildRestartButton(BuildContext context, QuizState state) {

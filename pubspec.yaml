@@ -25,6 +25,7 @@ dependencies:
   freezed_annotation: any
   get_it: any
   injectable: any
+  provider: any
 
 dev_dependencies:
   flutter_test:
