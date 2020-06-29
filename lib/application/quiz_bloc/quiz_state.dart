@@ -11,6 +11,7 @@ abstract class QuizState with _$QuizState {
     @required int correctAnswersCount,
     @required int incorrectAnswersCount,
     @required int totalAnswersCount,
+    @required int totalQuestionsCount,
   }) = _ShowingQuestion;
 
   factory QuizState.initial() = _Initial;
@@ -19,6 +20,7 @@ abstract class QuizState with _$QuizState {
     @required int correctAnswersCount,
     @required int incorrectAnswersCount,
     @required int totalAnswersCount,
+    @required int totalQuestionsCount,
   }) = _LoadingQuestion;
 
   factory QuizState.showingResponse({
@@ -28,6 +30,14 @@ abstract class QuizState with _$QuizState {
     @required int correctAnswersCount,
     @required int incorrectAnswersCount,
     @required int totalAnswersCount,
+    @required int totalQuestionsCount,
     @required Response response,
   }) = _ShowingResponse;
+
+  factory QuizState.finished({
+    @required int correctAnswersCount,
+    @required int incorrectAnswersCount,
+    @required int totalAnswersCount,
+    @required int totalQuestionsCount,
+  }) = _Finished;
 }

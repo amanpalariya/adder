@@ -207,6 +207,9 @@ class _QuizPageState extends State<QuizPage> {
   Widget _buildScorecardContent(QuizState state) {
     List<Widget> children = [];
     children = state.maybeMap(
+      initial: (state) => [
+        Text("Are you ready?"),
+      ],
       showingQuestion: (state) => <Widget>[
         Expanded(
           child: _buildInfoColumn(
@@ -291,6 +294,34 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
       ],
+      finished: (state) => <Widget>[
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.correctAnswersCount,
+              supportingText: "Correct",
+              color: Colors.green),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.incorrectAnswersCount,
+              supportingText: "Incorrect",
+              color: Colors.red),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+              data: state.totalAnswersCount -
+                  state.correctAnswersCount -
+                  state.incorrectAnswersCount,
+              supportingText: "Missed",
+              color: Colors.blue),
+        ),
+        Expanded(
+          child: _buildInfoColumn(
+            data: state.totalAnswersCount,
+            supportingText: "Total",
+          ),
+        ),
+      ],
       orElse: () => [],
     );
     return OrientationBuilder(builder: (context, orientation) {
@@ -342,8 +373,13 @@ class _QuizPageState extends State<QuizPage> {
     return "${seconds.toStringAsFixed(2)}";
   }
 
-  Widget _buildQuestionContent(
-      Question question, Duration timeLeft, Duration maxTimePerQuestion) {
+  Widget _buildQuestionContent({
+    Question question,
+    Duration timeLeft,
+    Duration maxTimePerQuestion,
+    int questionNumber,
+    int totalQuestions,
+  }) {
     const double padding = 16.0;
     MaterialColor timeColors = Colors.green;
     if (timeLeft.inSeconds < 5 && timeLeft.inSeconds > 2) {
@@ -362,7 +398,7 @@ class _QuizPageState extends State<QuizPage> {
             top: padding,
           ),
           child: Text(
-            "Question",
+            "Question $questionNumber/$totalQuestions",
             style: TextStyle(
               color: Colors.grey[500],
             ),
@@ -400,8 +436,13 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildResponseContent(Question question, Response response,
-      Duration timeLeft, Duration totalTime) {
+  Widget _buildResponseContent(
+      {Question question,
+      Response response,
+      Duration timeLeft,
+      Duration totalTime,
+      int questionNumber,
+      int totalQuestions}) {
     Color signalColor;
     switch (response) {
       case Response.DoneRight:
@@ -428,7 +469,7 @@ class _QuizPageState extends State<QuizPage> {
             top: padding,
           ),
           child: Text(
-            "Answer",
+            "Answer $questionNumber/$totalQuestions",
             style: TextStyle(
               color: Colors.grey[500],
             ),
@@ -469,9 +510,21 @@ class _QuizPageState extends State<QuizPage> {
       initial: (state) => _buildStartScreen(),
       loadingQuestion: (state) => _buildLoading(),
       showingQuestion: (state) => _buildQuestionContent(
-          state.question, state.timeLeft, state.maxTimePerQuestion),
+        question: state.question,
+        timeLeft: state.timeLeft,
+        maxTimePerQuestion: state.maxTimePerQuestion,
+        questionNumber: state.totalAnswersCount + 1,
+        totalQuestions: state.totalQuestionsCount,
+      ),
       showingResponse: (state) => _buildResponseContent(
-          state.question, state.response, state.timeLeft, state.totalTime),
+        question: state.question,
+        response: state.response,
+        timeLeft: state.timeLeft,
+        totalTime: state.totalTime,
+        questionNumber: state.totalAnswersCount,
+        totalQuestions: state.totalQuestionsCount,
+      ),
+      finished: (state) => _buildStartScreen(),
     );
     return Material(
       shape: RoundedRectangleBorder(
@@ -570,6 +623,16 @@ class _QuizPageState extends State<QuizPage> {
       color: Colors.blue,
     );
   }
+  Widget _buildRestartButton(BuildContext context, QuizState state) {
+    return _buildButton(
+      iconData: Icons.replay,
+      text: 'Restart',
+      onTap: () {
+        context.bloc<QuizBloc>().add(QuizEvent.start());
+      },
+      color: Colors.blue,
+    );
+  }
 
   Widget _buildAnswerPanel(BuildContext context, QuizState state) {
     return Container(
@@ -582,6 +645,13 @@ class _QuizPageState extends State<QuizPage> {
             children = [
               Expanded(child: Container()),
               Expanded(child: _buildStartButton(context, state)),
+              Expanded(child: Container()),
+            ];
+          },
+          finished: (_) {
+            children = [
+              Expanded(child: Container()),
+              Expanded(child: _buildRestartButton(context, state)),
               Expanded(child: Container()),
             ];
           },

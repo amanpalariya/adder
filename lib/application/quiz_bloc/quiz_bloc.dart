@@ -10,6 +10,7 @@ import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 part 'quiz_event.dart';
+
 part 'quiz_state.dart';
 
 part 'quiz_bloc.freezed.dart';
@@ -17,11 +18,14 @@ part 'quiz_bloc.freezed.dart';
 @injectable
 class QuizBloc extends Bloc<QuizEvent, QuizState> {
   final IQuestionGenerator _questionGenerator;
-  final GameSettings gameSettings;
+  final GameSettings gameSettings = GameSettings(
+    difficulty: GameDifficulty.Medium,
+    maxTimePerQuestion: Duration(seconds: 5),
+  );
   final Duration refreshRate = const Duration(milliseconds: 10);
   StreamSubscription _timerStreamSubscription;
 
-  QuizBloc(this._questionGenerator, {@required this.gameSettings});
+  QuizBloc(this._questionGenerator, );
 
   @override
   QuizState get initialState => QuizState.initial();
@@ -30,70 +34,116 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   Stream<QuizState> mapEventToState(
     QuizEvent event,
   ) async* {
-    yield* event.map(
-      start: (e) async* {
-        yield QuizState.loadingQuestion(
-          correctAnswersCount: 0,
-          incorrectAnswersCount: 0,
-          totalAnswersCount: 0,
-        );
-        yieldNewQuestionState();
-      },
-      onYesButtonPressed: (e) async* {
-        state.maybeMap(
-          showingQuestion: (showingQuestionState) {
-            _timerStreamSubscription?.cancel();
-            if (showingQuestionState.question.isTrue) {
-              correctResponse().then((_) => yieldNewQuestionState());
-            } else {
-              incorrectResponse().then((_) => yieldNewQuestionState());
-            }
-          },
-          orElse: () => state,
-        );
-      },
-      onNoButtonPressed: (e) async* {
-        state.maybeMap(
-          showingQuestion: (showingQuestionState) {
-            _timerStreamSubscription?.cancel();
-            if (!showingQuestionState.question.isTrue) {
-              correctResponse().then((_) => yieldNewQuestionState());
-            } else {
-              incorrectResponse().then((_) => yieldNewQuestionState());
-            }
-          },
-          orElse: () => state,
-        );
-      },
-      timeUp: (e) async* {
-        timeUp().then((_) => yieldNewQuestionState());
-      },
-      showQuestion: (e) async* {
-        yield QuizState.showingQuestion(
-          question: e.question,
-          correctAnswersCount: e.correctAnswersCount,
-          incorrectAnswersCount: e.incorrectAnswersCount,
-          totalAnswersCount: e.totalAnswersCount,
-          timeLeft: e.timeLeft,
-          maxTimePerQuestion: gameSettings.maxTimePerQuestion,
-        );
-      },
-      showResponse: (event) async* {
-        yield QuizState.showingResponse(
-          question: event.question,
-          correctAnswersCount: event.correctAnswersCount,
-          incorrectAnswersCount: event.incorrectAnswersCount,
-          totalAnswersCount: event.totalAnswersCount,
-          timeLeft: event.timeLeft,
-          totalTime: gameSettings.responseDisplayDuration,
-          response: event.response,
-        );
-      },
-    );
+    yield* event.map(start: (event) async* {
+      yield QuizState.loadingQuestion(
+        correctAnswersCount: 0,
+        incorrectAnswersCount: 0,
+        totalAnswersCount: 0,
+        totalQuestionsCount: gameSettings.totalNumberOfQuestions,
+      );
+      yieldNewQuestionState();
+    }, onYesButtonPressed: (event) async* {
+      state.maybeMap(
+        showingQuestion: (showingQuestionState) {
+          _timerStreamSubscription?.cancel();
+          if (showingQuestionState.question.isTrue) {
+            correctResponse().then((_) => yieldNewQuestionStateOrFinishedState());
+          } else {
+            incorrectResponse().then((_) => yieldNewQuestionStateOrFinishedState());
+          }
+        },
+        orElse: () => state,
+      );
+    }, onNoButtonPressed: (event) async* {
+      state.maybeMap(
+        showingQuestion: (showingQuestionState) {
+          _timerStreamSubscription?.cancel();
+          if (!showingQuestionState.question.isTrue) {
+            correctResponse().then((_) => yieldNewQuestionStateOrFinishedState());
+          } else {
+            incorrectResponse().then((_) => yieldNewQuestionStateOrFinishedState());
+          }
+        },
+        orElse: () => state,
+      );
+    }, timeUp: (event) async* {
+      timeUp().then((_) => yieldNewQuestionStateOrFinishedState());
+    }, showQuestion: (event) async* {
+      yield QuizState.showingQuestion(
+        question: event.question,
+        correctAnswersCount: event.correctAnswersCount,
+        incorrectAnswersCount: event.incorrectAnswersCount,
+        totalAnswersCount: event.totalAnswersCount,
+        totalQuestionsCount: gameSettings.totalNumberOfQuestions,
+        timeLeft: event.timeLeft,
+        maxTimePerQuestion: gameSettings.maxTimePerQuestion,
+      );
+    }, showResponse: (event) async* {
+      yield QuizState.showingResponse(
+        question: event.question,
+        correctAnswersCount: event.correctAnswersCount,
+        incorrectAnswersCount: event.incorrectAnswersCount,
+        totalAnswersCount: event.totalAnswersCount,
+        totalQuestionsCount: gameSettings.totalNumberOfQuestions,
+        timeLeft: event.timeLeft,
+        totalTime: gameSettings.responseDisplayDuration,
+        response: event.response,
+      );
+    }, finish: (event) async* {
+      yield QuizState.finished(
+        correctAnswersCount: event.correctAnswersCount,
+        incorrectAnswersCount: event.incorrectAnswersCount,
+        totalAnswersCount: event.totalAnswersCount,
+        totalQuestionsCount: gameSettings.totalNumberOfQuestions,
+      );
+    });
   }
 
   Future<Question> newQuestion() async {
-    return await _questionGenerator.generateQuestionOfDifficulty(gameSettings.difficulty);
+    return await _questionGenerator
+        .generateQuestionOfDifficulty(gameSettings.difficulty);
+  }
+
+  void yieldNewQuestionStateOrFinishedState() {
+    int totalAnswersCount = 0;
+    state.maybeMap(
+      showingQuestion: (state) {
+        totalAnswersCount = state.totalAnswersCount;
+      },
+      showingResponse: (state) {
+        totalAnswersCount = state.totalAnswersCount;
+      },
+      orElse: () {},
+    );
+    if (totalAnswersCount == gameSettings.totalNumberOfQuestions) {
+      yieldFinishedState();
+    } else {
+      yieldNewQuestionState();
+    }
+  }
+
+  void yieldFinishedState() async {
+    int correctAnswersCount = 0;
+    int incorrectAnswersCount = 0;
+    int totalAnswersCount = 0;
+    state.maybeMap(
+      showingQuestion: (state) {
+        correctAnswersCount = state.correctAnswersCount;
+        incorrectAnswersCount = state.incorrectAnswersCount;
+        totalAnswersCount = state.totalAnswersCount;
+      },
+      showingResponse: (state) {
+        correctAnswersCount = state.correctAnswersCount;
+        incorrectAnswersCount = state.incorrectAnswersCount;
+        totalAnswersCount = state.totalAnswersCount;
+      },
+      orElse: () {},
+    );
+    add(QuizEvent.finish(
+      correctAnswersCount: correctAnswersCount,
+      incorrectAnswersCount: incorrectAnswersCount,
+      totalAnswersCount: totalAnswersCount,
+    ));
   }
 
   void yieldNewQuestionState() async {

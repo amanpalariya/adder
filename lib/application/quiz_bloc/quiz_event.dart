@@ -21,4 +21,9 @@ abstract class QuizEvent with _$QuizEvent {
     @required Response response,
   }) = _ShowResponse;
   const factory QuizEvent.timeUp() = _TimeUp;
+  const factory QuizEvent.finish({
+    @required int correctAnswersCount,
+    @required int incorrectAnswersCount,
+    @required int totalAnswersCount,
+  }) = _Finish;
 }

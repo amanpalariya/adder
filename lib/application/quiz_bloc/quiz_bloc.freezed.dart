@@ -59,6 +59,17 @@ class _$QuizEventTearOff {
   _TimeUp timeUp() {
     return const _TimeUp();
   }
+
+  _Finish finish(
+      {@required int correctAnswersCount,
+      @required int incorrectAnswersCount,
+      @required int totalAnswersCount}) {
+    return _Finish(
+      correctAnswersCount: correctAnswersCount,
+      incorrectAnswersCount: incorrectAnswersCount,
+      totalAnswersCount: totalAnswersCount,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -86,6 +97,9 @@ mixin _$QuizEvent {
             Duration timeLeft,
             Response response),
     @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -102,6 +116,8 @@ mixin _$QuizEvent {
         Duration timeLeft,
         Response response),
     Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -112,6 +128,7 @@ mixin _$QuizEvent {
     @required Result showQuestion(_ShowQuestion value),
     @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -121,6 +138,7 @@ mixin _$QuizEvent {
     Result showQuestion(_ShowQuestion value),
     Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
     @required Result orElse(),
   });
 }
@@ -196,6 +214,9 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
             Duration timeLeft,
             Response response),
     @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -203,6 +224,7 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return start();
   }
 
@@ -222,6 +244,8 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
         Duration timeLeft,
         Response response),
     Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -240,6 +264,7 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     @required Result showQuestion(_ShowQuestion value),
     @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -247,6 +272,7 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return start(this);
   }
 
@@ -259,6 +285,7 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     Result showQuestion(_ShowQuestion value),
     Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -337,6 +364,9 @@ class _$_OnYesButtonPressed
             Duration timeLeft,
             Response response),
     @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -344,6 +374,7 @@ class _$_OnYesButtonPressed
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return onYesButtonPressed();
   }
 
@@ -363,6 +394,8 @@ class _$_OnYesButtonPressed
         Duration timeLeft,
         Response response),
     Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -381,6 +414,7 @@ class _$_OnYesButtonPressed
     @required Result showQuestion(_ShowQuestion value),
     @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -388,6 +422,7 @@ class _$_OnYesButtonPressed
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return onYesButtonPressed(this);
   }
 
@@ -400,6 +435,7 @@ class _$_OnYesButtonPressed
     Result showQuestion(_ShowQuestion value),
     Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -477,6 +513,9 @@ class _$_OnNoButtonPressed
             Duration timeLeft,
             Response response),
     @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -484,6 +523,7 @@ class _$_OnNoButtonPressed
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return onNoButtonPressed();
   }
 
@@ -503,6 +543,8 @@ class _$_OnNoButtonPressed
         Duration timeLeft,
         Response response),
     Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -521,6 +563,7 @@ class _$_OnNoButtonPressed
     @required Result showQuestion(_ShowQuestion value),
     @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -528,6 +571,7 @@ class _$_OnNoButtonPressed
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return onNoButtonPressed(this);
   }
 
@@ -540,6 +584,7 @@ class _$_OnNoButtonPressed
     Result showQuestion(_ShowQuestion value),
     Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -696,6 +741,9 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
             Duration timeLeft,
             Response response),
     @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -703,6 +751,7 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return showQuestion(question, correctAnswersCount, incorrectAnswersCount,
         totalAnswersCount, timeLeft);
   }
@@ -723,6 +772,8 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
         Duration timeLeft,
         Response response),
     Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -742,6 +793,7 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     @required Result showQuestion(_ShowQuestion value),
     @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -749,6 +801,7 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return showQuestion(this);
   }
 
@@ -761,6 +814,7 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     Result showQuestion(_ShowQuestion value),
     Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -941,6 +995,9 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
             Duration timeLeft,
             Response response),
     @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -948,6 +1005,7 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return showResponse(question, correctAnswersCount, incorrectAnswersCount,
         totalAnswersCount, timeLeft, response);
   }
@@ -968,6 +1026,8 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
         Duration timeLeft,
         Response response),
     Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -987,6 +1047,7 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     @required Result showQuestion(_ShowQuestion value),
     @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -994,6 +1055,7 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return showResponse(this);
   }
 
@@ -1006,6 +1068,7 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     Result showQuestion(_ShowQuestion value),
     Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1092,6 +1155,9 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
             Duration timeLeft,
             Response response),
     @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -1099,6 +1165,7 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return timeUp();
   }
 
@@ -1118,6 +1185,8 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
         Duration timeLeft,
         Response response),
     Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1136,6 +1205,7 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     @required Result showQuestion(_ShowQuestion value),
     @required Result showResponse(_ShowResponse value),
     @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
@@ -1143,6 +1213,7 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     assert(showQuestion != null);
     assert(showResponse != null);
     assert(timeUp != null);
+    assert(finish != null);
     return timeUp(this);
   }
 
@@ -1155,6 +1226,7 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     Result showQuestion(_ShowQuestion value),
     Result showResponse(_ShowResponse value),
     Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1169,6 +1241,218 @@ abstract class _TimeUp implements QuizEvent {
   const factory _TimeUp() = _$_TimeUp;
 }
 
+abstract class _$FinishCopyWith<$Res> {
+  factory _$FinishCopyWith(_Finish value, $Res Function(_Finish) then) =
+      __$FinishCopyWithImpl<$Res>;
+  $Res call(
+      {int correctAnswersCount,
+      int incorrectAnswersCount,
+      int totalAnswersCount});
+}
+
+class __$FinishCopyWithImpl<$Res> extends _$QuizEventCopyWithImpl<$Res>
+    implements _$FinishCopyWith<$Res> {
+  __$FinishCopyWithImpl(_Finish _value, $Res Function(_Finish) _then)
+      : super(_value, (v) => _then(v as _Finish));
+
+  @override
+  _Finish get _value => super._value as _Finish;
+
+  @override
+  $Res call({
+    Object correctAnswersCount = freezed,
+    Object incorrectAnswersCount = freezed,
+    Object totalAnswersCount = freezed,
+  }) {
+    return _then(_Finish(
+      correctAnswersCount: correctAnswersCount == freezed
+          ? _value.correctAnswersCount
+          : correctAnswersCount as int,
+      incorrectAnswersCount: incorrectAnswersCount == freezed
+          ? _value.incorrectAnswersCount
+          : incorrectAnswersCount as int,
+      totalAnswersCount: totalAnswersCount == freezed
+          ? _value.totalAnswersCount
+          : totalAnswersCount as int,
+    ));
+  }
+}
+
+class _$_Finish with DiagnosticableTreeMixin implements _Finish {
+  const _$_Finish(
+      {@required this.correctAnswersCount,
+      @required this.incorrectAnswersCount,
+      @required this.totalAnswersCount})
+      : assert(correctAnswersCount != null),
+        assert(incorrectAnswersCount != null),
+        assert(totalAnswersCount != null);
+
+  @override
+  final int correctAnswersCount;
+  @override
+  final int incorrectAnswersCount;
+  @override
+  final int totalAnswersCount;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'QuizEvent.finish(correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'QuizEvent.finish'))
+      ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
+      ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
+      ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Finish &&
+            (identical(other.correctAnswersCount, correctAnswersCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.correctAnswersCount, correctAnswersCount)) &&
+            (identical(other.incorrectAnswersCount, incorrectAnswersCount) ||
+                const DeepCollectionEquality().equals(
+                    other.incorrectAnswersCount, incorrectAnswersCount)) &&
+            (identical(other.totalAnswersCount, totalAnswersCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalAnswersCount, totalAnswersCount)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(correctAnswersCount) ^
+      const DeepCollectionEquality().hash(incorrectAnswersCount) ^
+      const DeepCollectionEquality().hash(totalAnswersCount);
+
+  @override
+  _$FinishCopyWith<_Finish> get copyWith =>
+      __$FinishCopyWithImpl<_Finish>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result start(),
+    @required Result onYesButtonPressed(),
+    @required Result onNoButtonPressed(),
+    @required
+        Result showQuestion(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft),
+    @required
+        Result showResponse(
+            Question question,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            Duration timeLeft,
+            Response response),
+    @required Result timeUp(),
+    @required
+        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount),
+  }) {
+    assert(start != null);
+    assert(onYesButtonPressed != null);
+    assert(onNoButtonPressed != null);
+    assert(showQuestion != null);
+    assert(showResponse != null);
+    assert(timeUp != null);
+    assert(finish != null);
+    return finish(
+        correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result start(),
+    Result onYesButtonPressed(),
+    Result onNoButtonPressed(),
+    Result showQuestion(Question question, int correctAnswersCount,
+        int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
+    Result showResponse(
+        Question question,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        Duration timeLeft,
+        Response response),
+    Result timeUp(),
+    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finish != null) {
+      return finish(
+          correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result start(_Start value),
+    @required Result onYesButtonPressed(_OnYesButtonPressed value),
+    @required Result onNoButtonPressed(_OnNoButtonPressed value),
+    @required Result showQuestion(_ShowQuestion value),
+    @required Result showResponse(_ShowResponse value),
+    @required Result timeUp(_TimeUp value),
+    @required Result finish(_Finish value),
+  }) {
+    assert(start != null);
+    assert(onYesButtonPressed != null);
+    assert(onNoButtonPressed != null);
+    assert(showQuestion != null);
+    assert(showResponse != null);
+    assert(timeUp != null);
+    assert(finish != null);
+    return finish(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result start(_Start value),
+    Result onYesButtonPressed(_OnYesButtonPressed value),
+    Result onNoButtonPressed(_OnNoButtonPressed value),
+    Result showQuestion(_ShowQuestion value),
+    Result showResponse(_ShowResponse value),
+    Result timeUp(_TimeUp value),
+    Result finish(_Finish value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finish != null) {
+      return finish(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Finish implements QuizEvent {
+  const factory _Finish(
+      {@required int correctAnswersCount,
+      @required int incorrectAnswersCount,
+      @required int totalAnswersCount}) = _$_Finish;
+
+  int get correctAnswersCount;
+  int get incorrectAnswersCount;
+  int get totalAnswersCount;
+  _$FinishCopyWith<_Finish> get copyWith;
+}
+
 class _$QuizStateTearOff {
   const _$QuizStateTearOff();
 
@@ -1178,7 +1462,8 @@ class _$QuizStateTearOff {
       @required Duration maxTimePerQuestion,
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
-      @required int totalAnswersCount}) {
+      @required int totalAnswersCount,
+      @required int totalQuestionsCount}) {
     return _ShowingQuestion(
       question: question,
       timeLeft: timeLeft,
@@ -1186,6 +1471,7 @@ class _$QuizStateTearOff {
       correctAnswersCount: correctAnswersCount,
       incorrectAnswersCount: incorrectAnswersCount,
       totalAnswersCount: totalAnswersCount,
+      totalQuestionsCount: totalQuestionsCount,
     );
   }
 
@@ -1196,11 +1482,13 @@ class _$QuizStateTearOff {
   _LoadingQuestion loadingQuestion(
       {@required int correctAnswersCount,
       @required int incorrectAnswersCount,
-      @required int totalAnswersCount}) {
+      @required int totalAnswersCount,
+      @required int totalQuestionsCount}) {
     return _LoadingQuestion(
       correctAnswersCount: correctAnswersCount,
       incorrectAnswersCount: incorrectAnswersCount,
       totalAnswersCount: totalAnswersCount,
+      totalQuestionsCount: totalQuestionsCount,
     );
   }
 
@@ -1211,6 +1499,7 @@ class _$QuizStateTearOff {
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
       @required int totalAnswersCount,
+      @required int totalQuestionsCount,
       @required Response response}) {
     return _ShowingResponse(
       question: question,
@@ -1219,7 +1508,21 @@ class _$QuizStateTearOff {
       correctAnswersCount: correctAnswersCount,
       incorrectAnswersCount: incorrectAnswersCount,
       totalAnswersCount: totalAnswersCount,
+      totalQuestionsCount: totalQuestionsCount,
       response: response,
+    );
+  }
+
+  _Finished finished(
+      {@required int correctAnswersCount,
+      @required int incorrectAnswersCount,
+      @required int totalAnswersCount,
+      @required int totalQuestionsCount}) {
+    return _Finished(
+      correctAnswersCount: correctAnswersCount,
+      incorrectAnswersCount: incorrectAnswersCount,
+      totalAnswersCount: totalAnswersCount,
+      totalQuestionsCount: totalQuestionsCount,
     );
   }
 }
@@ -1237,11 +1540,15 @@ mixin _$QuizState {
             Duration maxTimePerQuestion,
             int correctAnswersCount,
             int incorrectAnswersCount,
-            int totalAnswersCount),
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required Result initial(),
     @required
-        Result loadingQuestion(int correctAnswersCount,
-            int incorrectAnswersCount, int totalAnswersCount),
+        Result loadingQuestion(
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required
         Result showingResponse(
             Question question,
@@ -1250,7 +1557,11 @@ mixin _$QuizState {
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
+            int totalQuestionsCount,
             Response response),
+    @required
+        Result finished(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount, int totalQuestionsCount),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -1260,10 +1571,11 @@ mixin _$QuizState {
         Duration maxTimePerQuestion,
         int correctAnswersCount,
         int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount,
+        int totalQuestionsCount),
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount, int totalQuestionsCount),
     Result showingResponse(
         Question question,
         Duration timeLeft,
@@ -1271,7 +1583,10 @@ mixin _$QuizState {
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
+        int totalQuestionsCount,
         Response response),
+    Result finished(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount, int totalQuestionsCount),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -1280,6 +1595,7 @@ mixin _$QuizState {
     @required Result initial(_Initial value),
     @required Result loadingQuestion(_LoadingQuestion value),
     @required Result showingResponse(_ShowingResponse value),
+    @required Result finished(_Finished value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -1287,6 +1603,7 @@ mixin _$QuizState {
     Result initial(_Initial value),
     Result loadingQuestion(_LoadingQuestion value),
     Result showingResponse(_ShowingResponse value),
+    Result finished(_Finished value),
     @required Result orElse(),
   });
 }
@@ -1314,7 +1631,8 @@ abstract class _$ShowingQuestionCopyWith<$Res> {
       Duration maxTimePerQuestion,
       int correctAnswersCount,
       int incorrectAnswersCount,
-      int totalAnswersCount});
+      int totalAnswersCount,
+      int totalQuestionsCount});
 }
 
 class __$ShowingQuestionCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
@@ -1334,6 +1652,7 @@ class __$ShowingQuestionCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
     Object correctAnswersCount = freezed,
     Object incorrectAnswersCount = freezed,
     Object totalAnswersCount = freezed,
+    Object totalQuestionsCount = freezed,
   }) {
     return _then(_ShowingQuestion(
       question: question == freezed ? _value.question : question as Question,
@@ -1350,6 +1669,9 @@ class __$ShowingQuestionCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
       totalAnswersCount: totalAnswersCount == freezed
           ? _value.totalAnswersCount
           : totalAnswersCount as int,
+      totalQuestionsCount: totalQuestionsCount == freezed
+          ? _value.totalQuestionsCount
+          : totalQuestionsCount as int,
     ));
   }
 }
@@ -1363,13 +1685,15 @@ class _$_ShowingQuestion
       @required this.maxTimePerQuestion,
       @required this.correctAnswersCount,
       @required this.incorrectAnswersCount,
-      @required this.totalAnswersCount})
+      @required this.totalAnswersCount,
+      @required this.totalQuestionsCount})
       : assert(question != null),
         assert(timeLeft != null),
         assert(maxTimePerQuestion != null),
         assert(correctAnswersCount != null),
         assert(incorrectAnswersCount != null),
-        assert(totalAnswersCount != null);
+        assert(totalAnswersCount != null),
+        assert(totalQuestionsCount != null);
 
   @override
   final Question question;
@@ -1383,10 +1707,12 @@ class _$_ShowingQuestion
   final int incorrectAnswersCount;
   @override
   final int totalAnswersCount;
+  @override
+  final int totalQuestionsCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.showingQuestion(question: $question, timeLeft: $timeLeft, maxTimePerQuestion: $maxTimePerQuestion, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount)';
+    return 'QuizState.showingQuestion(question: $question, timeLeft: $timeLeft, maxTimePerQuestion: $maxTimePerQuestion, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, totalQuestionsCount: $totalQuestionsCount)';
   }
 
   @override
@@ -1399,7 +1725,8 @@ class _$_ShowingQuestion
       ..add(DiagnosticsProperty('maxTimePerQuestion', maxTimePerQuestion))
       ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
       ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
-      ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount));
+      ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount))
+      ..add(DiagnosticsProperty('totalQuestionsCount', totalQuestionsCount));
   }
 
   @override
@@ -1423,7 +1750,10 @@ class _$_ShowingQuestion
                     other.incorrectAnswersCount, incorrectAnswersCount)) &&
             (identical(other.totalAnswersCount, totalAnswersCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.totalAnswersCount, totalAnswersCount)));
+                    .equals(other.totalAnswersCount, totalAnswersCount)) &&
+            (identical(other.totalQuestionsCount, totalQuestionsCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalQuestionsCount, totalQuestionsCount)));
   }
 
   @override
@@ -1434,7 +1764,8 @@ class _$_ShowingQuestion
       const DeepCollectionEquality().hash(maxTimePerQuestion) ^
       const DeepCollectionEquality().hash(correctAnswersCount) ^
       const DeepCollectionEquality().hash(incorrectAnswersCount) ^
-      const DeepCollectionEquality().hash(totalAnswersCount);
+      const DeepCollectionEquality().hash(totalAnswersCount) ^
+      const DeepCollectionEquality().hash(totalQuestionsCount);
 
   @override
   _$ShowingQuestionCopyWith<_ShowingQuestion> get copyWith =>
@@ -1450,11 +1781,15 @@ class _$_ShowingQuestion
             Duration maxTimePerQuestion,
             int correctAnswersCount,
             int incorrectAnswersCount,
-            int totalAnswersCount),
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required Result initial(),
     @required
-        Result loadingQuestion(int correctAnswersCount,
-            int incorrectAnswersCount, int totalAnswersCount),
+        Result loadingQuestion(
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required
         Result showingResponse(
             Question question,
@@ -1463,14 +1798,25 @@ class _$_ShowingQuestion
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
+            int totalQuestionsCount,
             Response response),
+    @required
+        Result finished(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount, int totalQuestionsCount),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
-    return showingQuestion(question, timeLeft, maxTimePerQuestion,
-        correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
+    assert(finished != null);
+    return showingQuestion(
+        question,
+        timeLeft,
+        maxTimePerQuestion,
+        correctAnswersCount,
+        incorrectAnswersCount,
+        totalAnswersCount,
+        totalQuestionsCount);
   }
 
   @override
@@ -1482,10 +1828,11 @@ class _$_ShowingQuestion
         Duration maxTimePerQuestion,
         int correctAnswersCount,
         int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount,
+        int totalQuestionsCount),
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount, int totalQuestionsCount),
     Result showingResponse(
         Question question,
         Duration timeLeft,
@@ -1493,13 +1840,22 @@ class _$_ShowingQuestion
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
+        int totalQuestionsCount,
         Response response),
+    Result finished(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount, int totalQuestionsCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (showingQuestion != null) {
-      return showingQuestion(question, timeLeft, maxTimePerQuestion,
-          correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
+      return showingQuestion(
+          question,
+          timeLeft,
+          maxTimePerQuestion,
+          correctAnswersCount,
+          incorrectAnswersCount,
+          totalAnswersCount,
+          totalQuestionsCount);
     }
     return orElse();
   }
@@ -1511,11 +1867,13 @@ class _$_ShowingQuestion
     @required Result initial(_Initial value),
     @required Result loadingQuestion(_LoadingQuestion value),
     @required Result showingResponse(_ShowingResponse value),
+    @required Result finished(_Finished value),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
+    assert(finished != null);
     return showingQuestion(this);
   }
 
@@ -1526,6 +1884,7 @@ class _$_ShowingQuestion
     Result initial(_Initial value),
     Result loadingQuestion(_LoadingQuestion value),
     Result showingResponse(_ShowingResponse value),
+    Result finished(_Finished value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1543,7 +1902,8 @@ abstract class _ShowingQuestion implements QuizState {
       @required Duration maxTimePerQuestion,
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
-      @required int totalAnswersCount}) = _$_ShowingQuestion;
+      @required int totalAnswersCount,
+      @required int totalQuestionsCount}) = _$_ShowingQuestion;
 
   Question get question;
   Duration get timeLeft;
@@ -1551,6 +1911,7 @@ abstract class _ShowingQuestion implements QuizState {
   int get correctAnswersCount;
   int get incorrectAnswersCount;
   int get totalAnswersCount;
+  int get totalQuestionsCount;
   _$ShowingQuestionCopyWith<_ShowingQuestion> get copyWith;
 }
 
@@ -1600,11 +1961,15 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
             Duration maxTimePerQuestion,
             int correctAnswersCount,
             int incorrectAnswersCount,
-            int totalAnswersCount),
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required Result initial(),
     @required
-        Result loadingQuestion(int correctAnswersCount,
-            int incorrectAnswersCount, int totalAnswersCount),
+        Result loadingQuestion(
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required
         Result showingResponse(
             Question question,
@@ -1613,12 +1978,17 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
+            int totalQuestionsCount,
             Response response),
+    @required
+        Result finished(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount, int totalQuestionsCount),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
+    assert(finished != null);
     return initial();
   }
 
@@ -1631,10 +2001,11 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
         Duration maxTimePerQuestion,
         int correctAnswersCount,
         int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount,
+        int totalQuestionsCount),
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount, int totalQuestionsCount),
     Result showingResponse(
         Question question,
         Duration timeLeft,
@@ -1642,7 +2013,10 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
+        int totalQuestionsCount,
         Response response),
+    Result finished(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount, int totalQuestionsCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1659,11 +2033,13 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     @required Result initial(_Initial value),
     @required Result loadingQuestion(_LoadingQuestion value),
     @required Result showingResponse(_ShowingResponse value),
+    @required Result finished(_Finished value),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
+    assert(finished != null);
     return initial(this);
   }
 
@@ -1674,6 +2050,7 @@ class _$_Initial with DiagnosticableTreeMixin implements _Initial {
     Result initial(_Initial value),
     Result loadingQuestion(_LoadingQuestion value),
     Result showingResponse(_ShowingResponse value),
+    Result finished(_Finished value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1695,7 +2072,8 @@ abstract class _$LoadingQuestionCopyWith<$Res> {
   $Res call(
       {int correctAnswersCount,
       int incorrectAnswersCount,
-      int totalAnswersCount});
+      int totalAnswersCount,
+      int totalQuestionsCount});
 }
 
 class __$LoadingQuestionCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
@@ -1712,6 +2090,7 @@ class __$LoadingQuestionCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
     Object correctAnswersCount = freezed,
     Object incorrectAnswersCount = freezed,
     Object totalAnswersCount = freezed,
+    Object totalQuestionsCount = freezed,
   }) {
     return _then(_LoadingQuestion(
       correctAnswersCount: correctAnswersCount == freezed
@@ -1723,6 +2102,9 @@ class __$LoadingQuestionCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
       totalAnswersCount: totalAnswersCount == freezed
           ? _value.totalAnswersCount
           : totalAnswersCount as int,
+      totalQuestionsCount: totalQuestionsCount == freezed
+          ? _value.totalQuestionsCount
+          : totalQuestionsCount as int,
     ));
   }
 }
@@ -1733,10 +2115,12 @@ class _$_LoadingQuestion
   _$_LoadingQuestion(
       {@required this.correctAnswersCount,
       @required this.incorrectAnswersCount,
-      @required this.totalAnswersCount})
+      @required this.totalAnswersCount,
+      @required this.totalQuestionsCount})
       : assert(correctAnswersCount != null),
         assert(incorrectAnswersCount != null),
-        assert(totalAnswersCount != null);
+        assert(totalAnswersCount != null),
+        assert(totalQuestionsCount != null);
 
   @override
   final int correctAnswersCount;
@@ -1744,10 +2128,12 @@ class _$_LoadingQuestion
   final int incorrectAnswersCount;
   @override
   final int totalAnswersCount;
+  @override
+  final int totalQuestionsCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.loadingQuestion(correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount)';
+    return 'QuizState.loadingQuestion(correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, totalQuestionsCount: $totalQuestionsCount)';
   }
 
   @override
@@ -1757,7 +2143,8 @@ class _$_LoadingQuestion
       ..add(DiagnosticsProperty('type', 'QuizState.loadingQuestion'))
       ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
       ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
-      ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount));
+      ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount))
+      ..add(DiagnosticsProperty('totalQuestionsCount', totalQuestionsCount));
   }
 
   @override
@@ -1772,7 +2159,10 @@ class _$_LoadingQuestion
                     other.incorrectAnswersCount, incorrectAnswersCount)) &&
             (identical(other.totalAnswersCount, totalAnswersCount) ||
                 const DeepCollectionEquality()
-                    .equals(other.totalAnswersCount, totalAnswersCount)));
+                    .equals(other.totalAnswersCount, totalAnswersCount)) &&
+            (identical(other.totalQuestionsCount, totalQuestionsCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalQuestionsCount, totalQuestionsCount)));
   }
 
   @override
@@ -1780,7 +2170,8 @@ class _$_LoadingQuestion
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(correctAnswersCount) ^
       const DeepCollectionEquality().hash(incorrectAnswersCount) ^
-      const DeepCollectionEquality().hash(totalAnswersCount);
+      const DeepCollectionEquality().hash(totalAnswersCount) ^
+      const DeepCollectionEquality().hash(totalQuestionsCount);
 
   @override
   _$LoadingQuestionCopyWith<_LoadingQuestion> get copyWith =>
@@ -1796,11 +2187,15 @@ class _$_LoadingQuestion
             Duration maxTimePerQuestion,
             int correctAnswersCount,
             int incorrectAnswersCount,
-            int totalAnswersCount),
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required Result initial(),
     @required
-        Result loadingQuestion(int correctAnswersCount,
-            int incorrectAnswersCount, int totalAnswersCount),
+        Result loadingQuestion(
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required
         Result showingResponse(
             Question question,
@@ -1809,14 +2204,19 @@ class _$_LoadingQuestion
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
+            int totalQuestionsCount,
             Response response),
+    @required
+        Result finished(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount, int totalQuestionsCount),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
-    return loadingQuestion(
-        correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
+    assert(finished != null);
+    return loadingQuestion(correctAnswersCount, incorrectAnswersCount,
+        totalAnswersCount, totalQuestionsCount);
   }
 
   @override
@@ -1828,10 +2228,11 @@ class _$_LoadingQuestion
         Duration maxTimePerQuestion,
         int correctAnswersCount,
         int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount,
+        int totalQuestionsCount),
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount, int totalQuestionsCount),
     Result showingResponse(
         Question question,
         Duration timeLeft,
@@ -1839,13 +2240,16 @@ class _$_LoadingQuestion
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
+        int totalQuestionsCount,
         Response response),
+    Result finished(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount, int totalQuestionsCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loadingQuestion != null) {
-      return loadingQuestion(
-          correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
+      return loadingQuestion(correctAnswersCount, incorrectAnswersCount,
+          totalAnswersCount, totalQuestionsCount);
     }
     return orElse();
   }
@@ -1857,11 +2261,13 @@ class _$_LoadingQuestion
     @required Result initial(_Initial value),
     @required Result loadingQuestion(_LoadingQuestion value),
     @required Result showingResponse(_ShowingResponse value),
+    @required Result finished(_Finished value),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
+    assert(finished != null);
     return loadingQuestion(this);
   }
 
@@ -1872,6 +2278,7 @@ class _$_LoadingQuestion
     Result initial(_Initial value),
     Result loadingQuestion(_LoadingQuestion value),
     Result showingResponse(_ShowingResponse value),
+    Result finished(_Finished value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1886,11 +2293,13 @@ abstract class _LoadingQuestion implements QuizState {
   factory _LoadingQuestion(
       {@required int correctAnswersCount,
       @required int incorrectAnswersCount,
-      @required int totalAnswersCount}) = _$_LoadingQuestion;
+      @required int totalAnswersCount,
+      @required int totalQuestionsCount}) = _$_LoadingQuestion;
 
   int get correctAnswersCount;
   int get incorrectAnswersCount;
   int get totalAnswersCount;
+  int get totalQuestionsCount;
   _$LoadingQuestionCopyWith<_LoadingQuestion> get copyWith;
 }
 
@@ -1905,6 +2314,7 @@ abstract class _$ShowingResponseCopyWith<$Res> {
       int correctAnswersCount,
       int incorrectAnswersCount,
       int totalAnswersCount,
+      int totalQuestionsCount,
       Response response});
 }
 
@@ -1925,6 +2335,7 @@ class __$ShowingResponseCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
     Object correctAnswersCount = freezed,
     Object incorrectAnswersCount = freezed,
     Object totalAnswersCount = freezed,
+    Object totalQuestionsCount = freezed,
     Object response = freezed,
   }) {
     return _then(_ShowingResponse(
@@ -1941,6 +2352,9 @@ class __$ShowingResponseCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
       totalAnswersCount: totalAnswersCount == freezed
           ? _value.totalAnswersCount
           : totalAnswersCount as int,
+      totalQuestionsCount: totalQuestionsCount == freezed
+          ? _value.totalQuestionsCount
+          : totalQuestionsCount as int,
       response: response == freezed ? _value.response : response as Response,
     ));
   }
@@ -1956,6 +2370,7 @@ class _$_ShowingResponse
       @required this.correctAnswersCount,
       @required this.incorrectAnswersCount,
       @required this.totalAnswersCount,
+      @required this.totalQuestionsCount,
       @required this.response})
       : assert(question != null),
         assert(timeLeft != null),
@@ -1963,6 +2378,7 @@ class _$_ShowingResponse
         assert(correctAnswersCount != null),
         assert(incorrectAnswersCount != null),
         assert(totalAnswersCount != null),
+        assert(totalQuestionsCount != null),
         assert(response != null);
 
   @override
@@ -1978,11 +2394,13 @@ class _$_ShowingResponse
   @override
   final int totalAnswersCount;
   @override
+  final int totalQuestionsCount;
+  @override
   final Response response;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.showingResponse(question: $question, timeLeft: $timeLeft, totalTime: $totalTime, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, response: $response)';
+    return 'QuizState.showingResponse(question: $question, timeLeft: $timeLeft, totalTime: $totalTime, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, totalQuestionsCount: $totalQuestionsCount, response: $response)';
   }
 
   @override
@@ -1996,6 +2414,7 @@ class _$_ShowingResponse
       ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
       ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
       ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount))
+      ..add(DiagnosticsProperty('totalQuestionsCount', totalQuestionsCount))
       ..add(DiagnosticsProperty('response', response));
   }
 
@@ -2021,6 +2440,9 @@ class _$_ShowingResponse
             (identical(other.totalAnswersCount, totalAnswersCount) ||
                 const DeepCollectionEquality()
                     .equals(other.totalAnswersCount, totalAnswersCount)) &&
+            (identical(other.totalQuestionsCount, totalQuestionsCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalQuestionsCount, totalQuestionsCount)) &&
             (identical(other.response, response) ||
                 const DeepCollectionEquality()
                     .equals(other.response, response)));
@@ -2035,6 +2457,7 @@ class _$_ShowingResponse
       const DeepCollectionEquality().hash(correctAnswersCount) ^
       const DeepCollectionEquality().hash(incorrectAnswersCount) ^
       const DeepCollectionEquality().hash(totalAnswersCount) ^
+      const DeepCollectionEquality().hash(totalQuestionsCount) ^
       const DeepCollectionEquality().hash(response);
 
   @override
@@ -2051,11 +2474,15 @@ class _$_ShowingResponse
             Duration maxTimePerQuestion,
             int correctAnswersCount,
             int incorrectAnswersCount,
-            int totalAnswersCount),
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required Result initial(),
     @required
-        Result loadingQuestion(int correctAnswersCount,
-            int incorrectAnswersCount, int totalAnswersCount),
+        Result loadingQuestion(
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount),
     @required
         Result showingResponse(
             Question question,
@@ -2064,14 +2491,26 @@ class _$_ShowingResponse
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
+            int totalQuestionsCount,
             Response response),
+    @required
+        Result finished(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount, int totalQuestionsCount),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
-    return showingResponse(question, timeLeft, totalTime, correctAnswersCount,
-        incorrectAnswersCount, totalAnswersCount, response);
+    assert(finished != null);
+    return showingResponse(
+        question,
+        timeLeft,
+        totalTime,
+        correctAnswersCount,
+        incorrectAnswersCount,
+        totalAnswersCount,
+        totalQuestionsCount,
+        response);
   }
 
   @override
@@ -2083,10 +2522,11 @@ class _$_ShowingResponse
         Duration maxTimePerQuestion,
         int correctAnswersCount,
         int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount,
+        int totalQuestionsCount),
     Result initial(),
     Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
-        int totalAnswersCount),
+        int totalAnswersCount, int totalQuestionsCount),
     Result showingResponse(
         Question question,
         Duration timeLeft,
@@ -2094,13 +2534,23 @@ class _$_ShowingResponse
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
+        int totalQuestionsCount,
         Response response),
+    Result finished(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount, int totalQuestionsCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (showingResponse != null) {
-      return showingResponse(question, timeLeft, totalTime, correctAnswersCount,
-          incorrectAnswersCount, totalAnswersCount, response);
+      return showingResponse(
+          question,
+          timeLeft,
+          totalTime,
+          correctAnswersCount,
+          incorrectAnswersCount,
+          totalAnswersCount,
+          totalQuestionsCount,
+          response);
     }
     return orElse();
   }
@@ -2112,11 +2562,13 @@ class _$_ShowingResponse
     @required Result initial(_Initial value),
     @required Result loadingQuestion(_LoadingQuestion value),
     @required Result showingResponse(_ShowingResponse value),
+    @required Result finished(_Finished value),
   }) {
     assert(showingQuestion != null);
     assert(initial != null);
     assert(loadingQuestion != null);
     assert(showingResponse != null);
+    assert(finished != null);
     return showingResponse(this);
   }
 
@@ -2127,6 +2579,7 @@ class _$_ShowingResponse
     Result initial(_Initial value),
     Result loadingQuestion(_LoadingQuestion value),
     Result showingResponse(_ShowingResponse value),
+    Result finished(_Finished value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2145,6 +2598,7 @@ abstract class _ShowingResponse implements QuizState {
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
       @required int totalAnswersCount,
+      @required int totalQuestionsCount,
       @required Response response}) = _$_ShowingResponse;
 
   Question get question;
@@ -2153,6 +2607,241 @@ abstract class _ShowingResponse implements QuizState {
   int get correctAnswersCount;
   int get incorrectAnswersCount;
   int get totalAnswersCount;
+  int get totalQuestionsCount;
   Response get response;
   _$ShowingResponseCopyWith<_ShowingResponse> get copyWith;
+}
+
+abstract class _$FinishedCopyWith<$Res> {
+  factory _$FinishedCopyWith(_Finished value, $Res Function(_Finished) then) =
+      __$FinishedCopyWithImpl<$Res>;
+  $Res call(
+      {int correctAnswersCount,
+      int incorrectAnswersCount,
+      int totalAnswersCount,
+      int totalQuestionsCount});
+}
+
+class __$FinishedCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
+    implements _$FinishedCopyWith<$Res> {
+  __$FinishedCopyWithImpl(_Finished _value, $Res Function(_Finished) _then)
+      : super(_value, (v) => _then(v as _Finished));
+
+  @override
+  _Finished get _value => super._value as _Finished;
+
+  @override
+  $Res call({
+    Object correctAnswersCount = freezed,
+    Object incorrectAnswersCount = freezed,
+    Object totalAnswersCount = freezed,
+    Object totalQuestionsCount = freezed,
+  }) {
+    return _then(_Finished(
+      correctAnswersCount: correctAnswersCount == freezed
+          ? _value.correctAnswersCount
+          : correctAnswersCount as int,
+      incorrectAnswersCount: incorrectAnswersCount == freezed
+          ? _value.incorrectAnswersCount
+          : incorrectAnswersCount as int,
+      totalAnswersCount: totalAnswersCount == freezed
+          ? _value.totalAnswersCount
+          : totalAnswersCount as int,
+      totalQuestionsCount: totalQuestionsCount == freezed
+          ? _value.totalQuestionsCount
+          : totalQuestionsCount as int,
+    ));
+  }
+}
+
+class _$_Finished with DiagnosticableTreeMixin implements _Finished {
+  _$_Finished(
+      {@required this.correctAnswersCount,
+      @required this.incorrectAnswersCount,
+      @required this.totalAnswersCount,
+      @required this.totalQuestionsCount})
+      : assert(correctAnswersCount != null),
+        assert(incorrectAnswersCount != null),
+        assert(totalAnswersCount != null),
+        assert(totalQuestionsCount != null);
+
+  @override
+  final int correctAnswersCount;
+  @override
+  final int incorrectAnswersCount;
+  @override
+  final int totalAnswersCount;
+  @override
+  final int totalQuestionsCount;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'QuizState.finished(correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, totalQuestionsCount: $totalQuestionsCount)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'QuizState.finished'))
+      ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
+      ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
+      ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount))
+      ..add(DiagnosticsProperty('totalQuestionsCount', totalQuestionsCount));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Finished &&
+            (identical(other.correctAnswersCount, correctAnswersCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.correctAnswersCount, correctAnswersCount)) &&
+            (identical(other.incorrectAnswersCount, incorrectAnswersCount) ||
+                const DeepCollectionEquality().equals(
+                    other.incorrectAnswersCount, incorrectAnswersCount)) &&
+            (identical(other.totalAnswersCount, totalAnswersCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalAnswersCount, totalAnswersCount)) &&
+            (identical(other.totalQuestionsCount, totalQuestionsCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalQuestionsCount, totalQuestionsCount)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(correctAnswersCount) ^
+      const DeepCollectionEquality().hash(incorrectAnswersCount) ^
+      const DeepCollectionEquality().hash(totalAnswersCount) ^
+      const DeepCollectionEquality().hash(totalQuestionsCount);
+
+  @override
+  _$FinishedCopyWith<_Finished> get copyWith =>
+      __$FinishedCopyWithImpl<_Finished>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required
+        Result showingQuestion(
+            Question question,
+            Duration timeLeft,
+            Duration maxTimePerQuestion,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount),
+    @required Result initial(),
+    @required
+        Result loadingQuestion(
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount),
+    @required
+        Result showingResponse(
+            Question question,
+            Duration timeLeft,
+            Duration totalTime,
+            int correctAnswersCount,
+            int incorrectAnswersCount,
+            int totalAnswersCount,
+            int totalQuestionsCount,
+            Response response),
+    @required
+        Result finished(int correctAnswersCount, int incorrectAnswersCount,
+            int totalAnswersCount, int totalQuestionsCount),
+  }) {
+    assert(showingQuestion != null);
+    assert(initial != null);
+    assert(loadingQuestion != null);
+    assert(showingResponse != null);
+    assert(finished != null);
+    return finished(correctAnswersCount, incorrectAnswersCount,
+        totalAnswersCount, totalQuestionsCount);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result showingQuestion(
+        Question question,
+        Duration timeLeft,
+        Duration maxTimePerQuestion,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        int totalQuestionsCount),
+    Result initial(),
+    Result loadingQuestion(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount, int totalQuestionsCount),
+    Result showingResponse(
+        Question question,
+        Duration timeLeft,
+        Duration totalTime,
+        int correctAnswersCount,
+        int incorrectAnswersCount,
+        int totalAnswersCount,
+        int totalQuestionsCount,
+        Response response),
+    Result finished(int correctAnswersCount, int incorrectAnswersCount,
+        int totalAnswersCount, int totalQuestionsCount),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finished != null) {
+      return finished(correctAnswersCount, incorrectAnswersCount,
+          totalAnswersCount, totalQuestionsCount);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result showingQuestion(_ShowingQuestion value),
+    @required Result initial(_Initial value),
+    @required Result loadingQuestion(_LoadingQuestion value),
+    @required Result showingResponse(_ShowingResponse value),
+    @required Result finished(_Finished value),
+  }) {
+    assert(showingQuestion != null);
+    assert(initial != null);
+    assert(loadingQuestion != null);
+    assert(showingResponse != null);
+    assert(finished != null);
+    return finished(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result showingQuestion(_ShowingQuestion value),
+    Result initial(_Initial value),
+    Result loadingQuestion(_LoadingQuestion value),
+    Result showingResponse(_ShowingResponse value),
+    Result finished(_Finished value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (finished != null) {
+      return finished(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Finished implements QuizState {
+  factory _Finished(
+      {@required int correctAnswersCount,
+      @required int incorrectAnswersCount,
+      @required int totalAnswersCount,
+      @required int totalQuestionsCount}) = _$_Finished;
+
+  int get correctAnswersCount;
+  int get incorrectAnswersCount;
+  int get totalAnswersCount;
+  int get totalQuestionsCount;
+  _$FinishedCopyWith<_Finished> get copyWith;
 }

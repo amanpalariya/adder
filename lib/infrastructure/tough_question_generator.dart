@@ -42,7 +42,7 @@ class ToughQuestionGenerator implements IQuestionGenerator {
         maxOperands = 6;
         break;
     }
-    return _randomGenerator.getRandomIntegerBetween(2, maxOperands);
+    return _randomGenerator.getRandomIntegerBetween(2-1, maxOperands+1);
   }
 
   int _getConfusingAnswer(List<int> operands) {
