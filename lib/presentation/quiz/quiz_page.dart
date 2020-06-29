@@ -1,5 +1,6 @@
 import 'package:adder_game/application/quiz_bloc/quiz_bloc.dart';
 import 'package:adder_game/domain/question.dart';
+import 'package:adder_game/presentation/core/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './theme.dart';
@@ -19,7 +20,7 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    myTheme ??= MyTheme.fromTheme(Theme.of(context));
+    myTheme = MyTheme.fromTheme(Theme.of(context));
     return BlocConsumer<QuizBloc, QuizState>(listener: (context, state) {
       // state.map(
       //   initial: (state) {
@@ -122,7 +123,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Row _buildActionsRow(QuizState state) {
-    List<IconButton> buttons = [];
+    List<Widget> buttons = [];
     state.maybeMap(initial: (state) {
       buttons = [
         _makeActionButton(
@@ -147,9 +148,36 @@ class _QuizPageState extends State<QuizPage> {
     }, orElse: () {
       buttons = [];
     });
+    buttons.add(_buildThemeChangeMenu());
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: buttons,
+    );
+  }
+
+  Widget _buildThemeChangeMenu() {
+    return PopupMenuButton(
+      child: Icon(Icons.color_lens, color: myTheme.appBarActionIconColor),
+      tooltip: "Change theme",
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            child: Text("System"),
+            value: ThemeMode.system,
+          ),
+          PopupMenuItem(
+            child: Text("Light"),
+            value: ThemeMode.light,
+          ),
+          PopupMenuItem(
+            child: Text("Dark"),
+            value: ThemeMode.dark,
+          ),
+        ];
+      },
+      onSelected: (value){
+        ThemeProvider.of(context, listen: false).changeThemeMode(value);
+      },
     );
   }
 
@@ -317,6 +345,7 @@ class _QuizPageState extends State<QuizPage> {
     EdgeInsetsGeometry padding = const EdgeInsets.all(16.0);
     return Material(
       // color: Colors.white.withOpacity(0.05),
+      color: myTheme.cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: borderRadius,
         side: BorderSide(color: myTheme.cardBorderColor, width: 2),
@@ -454,7 +483,9 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Theme(
-          data: ThemeData(primarySwatch: myTheme.lessImportantTimeRemainingColor, brightness: myTheme.brightness),
+          data: ThemeData(
+              primarySwatch: myTheme.lessImportantTimeRemainingColor,
+              brightness: myTheme.brightness),
           child: Opacity(
             opacity: 0.3,
             child: LinearProgressIndicator(
@@ -483,6 +514,7 @@ class _QuizPageState extends State<QuizPage> {
         side: BorderSide(color: myTheme.cardBorderColor, width: 2),
       ),
       // elevation: 2.0,
+      color: myTheme.cardColor,
       clipBehavior: Clip.antiAlias,
       child: child,
     );
@@ -508,6 +540,7 @@ class _QuizPageState extends State<QuizPage> {
         shape: CircleBorder(
           side: BorderSide(color: secondaryColor, width: 2),
         ),
+        color: myTheme.cardColor,
         // elevation: 2.0,
         // shape: CircleBorder(),
         child: InkWell(

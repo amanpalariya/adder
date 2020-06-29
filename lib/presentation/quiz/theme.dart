@@ -47,15 +47,16 @@ class MyTheme {
     this.appBarActionIconColor,
   });
 
-  bool get isLightTheme => brightness==Brightness.light;
-  bool get isDarkTheme => brightness==Brightness.dark;
+  bool get isLightTheme => brightness == Brightness.light;
+
+  bool get isDarkTheme => brightness == Brightness.dark;
 
   factory MyTheme.light(ThemeData themeData) => MyTheme._(
-      brightness: Brightness.light,
+        brightness: Brightness.light,
         primaryColor: themeData.primaryColor,
         secondaryColor: themeData.accentColor,
         backgroundColor: themeData.backgroundColor,
-        appBarActionIconColor: Colors.grey,
+        appBarActionIconColor: Colors.grey[600],
         cardColor: Colors.white,
         cardBorderColor: Colors.grey[300],
         primaryTextColor: Colors.grey[800],
@@ -65,15 +66,15 @@ class MyTheme {
       );
 
   factory MyTheme.dark(ThemeData themeData) => MyTheme._(
-      brightness: Brightness.dark,
+        brightness: Brightness.dark,
         primaryColor: themeData.primaryColor,
         secondaryColor: themeData.accentColor,
         backgroundColor: themeData.backgroundColor,
-        appBarActionIconColor: Colors.grey[200],
-        cardColor: Colors.grey[800],
+        appBarActionIconColor: Colors.grey[400],
+        cardColor: Colors.grey[880],
         cardBorderColor: Colors.grey[700],
-        primaryTextColor: Colors.white,
-        secondaryTextColor: Colors.grey[100],
+        primaryTextColor: Colors.grey[100],
+        secondaryTextColor: Colors.grey[300],
         tertiaryTextColor: Colors.grey[500],
         lessImportantTimeRemainingColor: Colors.grey,
       );
