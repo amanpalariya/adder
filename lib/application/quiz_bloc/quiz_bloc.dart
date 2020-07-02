@@ -66,9 +66,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         },
         orElse: () => state,
       );
-    }, timeUp: (event) async* {
+    }, _timeUp: (event) async* {
       timeUp().then((_) => yieldNewQuestionStateOrFinishedState());
-    }, showQuestion: (event) async* {
+    }, _showQuestion: (event) async* {
       yield QuizState.showingQuestion(
         question: event.question,
         correctAnswersCount: event.correctAnswersCount,
@@ -78,7 +78,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         timeLeft: event.timeLeft,
         maxTimePerQuestion: gameSettings.maxTimePerQuestion,
       );
-    }, showResponse: (event) async* {
+    }, _showResponse: (event) async* {
       yield QuizState.showingResponse(
         question: event.question,
         correctAnswersCount: event.correctAnswersCount,
@@ -89,7 +89,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         totalTime: gameSettings.responseDisplayDuration,
         response: event.response,
       );
-    }, finish: (event) async* {
+    }, _finish: (event) async* {
       yield QuizState.finished(
         correctAnswersCount: event.correctAnswersCount,
         incorrectAnswersCount: event.incorrectAnswersCount,
@@ -139,7 +139,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       },
       orElse: () {},
     );
-    add(QuizEvent.finish(
+    add(QuizEvent._finish(
       correctAnswersCount: correctAnswersCount,
       incorrectAnswersCount: incorrectAnswersCount,
       totalAnswersCount: totalAnswersCount,
@@ -167,7 +167,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       orElse: () {},
     );
     _timerStreamSubscription?.cancel();
-    add(QuizEvent.showQuestion(
+    add(QuizEvent._showQuestion(
       question: question,
       correctAnswersCount: correctAnswersCount,
       incorrectAnswersCount: incorrectAnswersCount,
@@ -176,7 +176,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     ));
     _timerStreamSubscription = timer.listen((_) {
       timeLeft = timeLeft - refreshRate;
-      add(QuizEvent.showQuestion(
+      add(QuizEvent._showQuestion(
         question: question,
         correctAnswersCount: correctAnswersCount,
         incorrectAnswersCount: incorrectAnswersCount,
@@ -184,7 +184,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         timeLeft: timeLeft,
       ));
       if (timeLeft <= Duration.zero) {
-        add(QuizEvent.timeUp());
+        add(QuizEvent._timeUp());
         _timerStreamSubscription.cancel();
       }
     });
@@ -220,7 +220,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       },
     );
     _timerStreamSubscription?.cancel();
-    add(QuizEvent.showResponse(
+    add(QuizEvent._showResponse(
       question: question,
       correctAnswersCount: correctAnswersCount,
       incorrectAnswersCount: incorrectAnswersCount,
@@ -230,7 +230,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     ));
     _timerStreamSubscription = timer.listen((_) {
       timeLeft = timeLeft - refreshRate;
-      add(QuizEvent.showResponse(
+      add(QuizEvent._showResponse(
         question: question,
         correctAnswersCount: correctAnswersCount,
         incorrectAnswersCount: incorrectAnswersCount,

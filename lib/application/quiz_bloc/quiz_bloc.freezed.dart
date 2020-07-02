@@ -24,7 +24,7 @@ class _$QuizEventTearOff {
     return const _OnNoButtonPressed();
   }
 
-  _ShowQuestion showQuestion(
+  _ShowQuestion _showQuestion(
       {@required Question question,
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
@@ -39,7 +39,7 @@ class _$QuizEventTearOff {
     );
   }
 
-  _ShowResponse showResponse(
+  _ShowResponse _showResponse(
       {@required Question question,
       @required int correctAnswersCount,
       @required int incorrectAnswersCount,
@@ -56,11 +56,11 @@ class _$QuizEventTearOff {
     );
   }
 
-  _TimeUp timeUp() {
+  _TimeUp _timeUp() {
     return const _TimeUp();
   }
 
-  _Finish finish(
+  _Finish _finish(
       {@required int correctAnswersCount,
       @required int incorrectAnswersCount,
       @required int totalAnswersCount}) {
@@ -82,23 +82,23 @@ mixin _$QuizEvent {
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   });
   @optionalTypeArgs
@@ -106,17 +106,17 @@ mixin _$QuizEvent {
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   });
@@ -125,20 +125,20 @@ mixin _$QuizEvent {
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   });
 }
@@ -199,32 +199,32 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
     return start();
   }
 
@@ -234,17 +234,17 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   }) {
@@ -261,18 +261,18 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
     return start(this);
   }
 
@@ -282,10 +282,10 @@ class _$_Start with DiagnosticableTreeMixin implements _Start {
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -349,32 +349,32 @@ class _$_OnYesButtonPressed
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
     return onYesButtonPressed();
   }
 
@@ -384,17 +384,17 @@ class _$_OnYesButtonPressed
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   }) {
@@ -411,18 +411,18 @@ class _$_OnYesButtonPressed
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
     return onYesButtonPressed(this);
   }
 
@@ -432,10 +432,10 @@ class _$_OnYesButtonPressed
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -498,32 +498,32 @@ class _$_OnNoButtonPressed
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
     return onNoButtonPressed();
   }
 
@@ -533,17 +533,17 @@ class _$_OnNoButtonPressed
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   }) {
@@ -560,18 +560,18 @@ class _$_OnNoButtonPressed
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
     return onNoButtonPressed(this);
   }
 
@@ -581,10 +581,10 @@ class _$_OnNoButtonPressed
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -670,14 +670,14 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizEvent.showQuestion(question: $question, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, timeLeft: $timeLeft)';
+    return 'QuizEvent._showQuestion(question: $question, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, timeLeft: $timeLeft)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuizEvent.showQuestion'))
+      ..add(DiagnosticsProperty('type', 'QuizEvent._showQuestion'))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
       ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
@@ -726,33 +726,33 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return showQuestion(question, correctAnswersCount, incorrectAnswersCount,
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _showQuestion(question, correctAnswersCount, incorrectAnswersCount,
         totalAnswersCount, timeLeft);
   }
 
@@ -762,23 +762,23 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (showQuestion != null) {
-      return showQuestion(question, correctAnswersCount, incorrectAnswersCount,
+    if (_showQuestion != null) {
+      return _showQuestion(question, correctAnswersCount, incorrectAnswersCount,
           totalAnswersCount, timeLeft);
     }
     return orElse();
@@ -790,19 +790,19 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return showQuestion(this);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _showQuestion(this);
   }
 
   @override
@@ -811,15 +811,15 @@ class _$_ShowQuestion with DiagnosticableTreeMixin implements _ShowQuestion {
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (showQuestion != null) {
-      return showQuestion(this);
+    if (_showQuestion != null) {
+      return _showQuestion(this);
     }
     return orElse();
   }
@@ -919,14 +919,14 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizEvent.showResponse(question: $question, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, timeLeft: $timeLeft, response: $response)';
+    return 'QuizEvent._showResponse(question: $question, correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount, timeLeft: $timeLeft, response: $response)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuizEvent.showResponse'))
+      ..add(DiagnosticsProperty('type', 'QuizEvent._showResponse'))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
       ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
@@ -980,33 +980,33 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return showResponse(question, correctAnswersCount, incorrectAnswersCount,
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _showResponse(question, correctAnswersCount, incorrectAnswersCount,
         totalAnswersCount, timeLeft, response);
   }
 
@@ -1016,23 +1016,23 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (showResponse != null) {
-      return showResponse(question, correctAnswersCount, incorrectAnswersCount,
+    if (_showResponse != null) {
+      return _showResponse(question, correctAnswersCount, incorrectAnswersCount,
           totalAnswersCount, timeLeft, response);
     }
     return orElse();
@@ -1044,19 +1044,19 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return showResponse(this);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _showResponse(this);
   }
 
   @override
@@ -1065,15 +1065,15 @@ class _$_ShowResponse with DiagnosticableTreeMixin implements _ShowResponse {
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (showResponse != null) {
-      return showResponse(this);
+    if (_showResponse != null) {
+      return _showResponse(this);
     }
     return orElse();
   }
@@ -1116,13 +1116,13 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizEvent.timeUp()';
+    return 'QuizEvent._timeUp()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'QuizEvent.timeUp'));
+    properties..add(DiagnosticsProperty('type', 'QuizEvent._timeUp'));
   }
 
   @override
@@ -1140,33 +1140,33 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return timeUp();
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _timeUp();
   }
 
   @override
@@ -1175,23 +1175,23 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (timeUp != null) {
-      return timeUp();
+    if (_timeUp != null) {
+      return _timeUp();
     }
     return orElse();
   }
@@ -1202,19 +1202,19 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return timeUp(this);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _timeUp(this);
   }
 
   @override
@@ -1223,15 +1223,15 @@ class _$_TimeUp with DiagnosticableTreeMixin implements _TimeUp {
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (timeUp != null) {
-      return timeUp(this);
+    if (_timeUp != null) {
+      return _timeUp(this);
     }
     return orElse();
   }
@@ -1296,14 +1296,14 @@ class _$_Finish with DiagnosticableTreeMixin implements _Finish {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizEvent.finish(correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount)';
+    return 'QuizEvent._finish(correctAnswersCount: $correctAnswersCount, incorrectAnswersCount: $incorrectAnswersCount, totalAnswersCount: $totalAnswersCount)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuizEvent.finish'))
+      ..add(DiagnosticsProperty('type', 'QuizEvent._finish'))
       ..add(DiagnosticsProperty('correctAnswersCount', correctAnswersCount))
       ..add(DiagnosticsProperty('incorrectAnswersCount', incorrectAnswersCount))
       ..add(DiagnosticsProperty('totalAnswersCount', totalAnswersCount));
@@ -1342,33 +1342,33 @@ class _$_Finish with DiagnosticableTreeMixin implements _Finish {
     @required Result onYesButtonPressed(),
     @required Result onNoButtonPressed(),
     @required
-        Result showQuestion(
+        Result _showQuestion(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft),
     @required
-        Result showResponse(
+        Result _showResponse(
             Question question,
             int correctAnswersCount,
             int incorrectAnswersCount,
             int totalAnswersCount,
             Duration timeLeft,
             Response response),
-    @required Result timeUp(),
+    @required Result _timeUp(),
     @required
-        Result finish(int correctAnswersCount, int incorrectAnswersCount,
+        Result _finish(int correctAnswersCount, int incorrectAnswersCount,
             int totalAnswersCount),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return finish(
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _finish(
         correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
   }
 
@@ -1378,23 +1378,23 @@ class _$_Finish with DiagnosticableTreeMixin implements _Finish {
     Result start(),
     Result onYesButtonPressed(),
     Result onNoButtonPressed(),
-    Result showQuestion(Question question, int correctAnswersCount,
+    Result _showQuestion(Question question, int correctAnswersCount,
         int incorrectAnswersCount, int totalAnswersCount, Duration timeLeft),
-    Result showResponse(
+    Result _showResponse(
         Question question,
         int correctAnswersCount,
         int incorrectAnswersCount,
         int totalAnswersCount,
         Duration timeLeft,
         Response response),
-    Result timeUp(),
-    Result finish(int correctAnswersCount, int incorrectAnswersCount,
+    Result _timeUp(),
+    Result _finish(int correctAnswersCount, int incorrectAnswersCount,
         int totalAnswersCount),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (finish != null) {
-      return finish(
+    if (_finish != null) {
+      return _finish(
           correctAnswersCount, incorrectAnswersCount, totalAnswersCount);
     }
     return orElse();
@@ -1406,19 +1406,19 @@ class _$_Finish with DiagnosticableTreeMixin implements _Finish {
     @required Result start(_Start value),
     @required Result onYesButtonPressed(_OnYesButtonPressed value),
     @required Result onNoButtonPressed(_OnNoButtonPressed value),
-    @required Result showQuestion(_ShowQuestion value),
-    @required Result showResponse(_ShowResponse value),
-    @required Result timeUp(_TimeUp value),
-    @required Result finish(_Finish value),
+    @required Result _showQuestion(_ShowQuestion value),
+    @required Result _showResponse(_ShowResponse value),
+    @required Result _timeUp(_TimeUp value),
+    @required Result _finish(_Finish value),
   }) {
     assert(start != null);
     assert(onYesButtonPressed != null);
     assert(onNoButtonPressed != null);
-    assert(showQuestion != null);
-    assert(showResponse != null);
-    assert(timeUp != null);
-    assert(finish != null);
-    return finish(this);
+    assert(_showQuestion != null);
+    assert(_showResponse != null);
+    assert(_timeUp != null);
+    assert(_finish != null);
+    return _finish(this);
   }
 
   @override
@@ -1427,15 +1427,15 @@ class _$_Finish with DiagnosticableTreeMixin implements _Finish {
     Result start(_Start value),
     Result onYesButtonPressed(_OnYesButtonPressed value),
     Result onNoButtonPressed(_OnNoButtonPressed value),
-    Result showQuestion(_ShowQuestion value),
-    Result showResponse(_ShowResponse value),
-    Result timeUp(_TimeUp value),
-    Result finish(_Finish value),
+    Result _showQuestion(_ShowQuestion value),
+    Result _showResponse(_ShowResponse value),
+    Result _timeUp(_TimeUp value),
+    Result _finish(_Finish value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (finish != null) {
-      return finish(this);
+    if (_finish != null) {
+      return _finish(this);
     }
     return orElse();
   }
