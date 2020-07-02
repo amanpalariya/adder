@@ -7,7 +7,7 @@ This is a simple game 🕹 with two controls. It requires the user to guess if a
 This is game is simple, right?\
 \
 Well, anyone could have made this game in matter of hours but this project is not focused on the <b>game</b> 🎮 but on the <b>architecture</b> 🏗.\
-This game is kept simple so as to allow people of all skill levels‍ to appreciate the clean code 💻 and if possible take away a few good ideas 💡.
+This game is kept simple so as to allow people of all skill levels‍ to appreciate the clean code 💻 and, if possible, take away a few good ideas 💡.
 
 ## Getting Started
 
