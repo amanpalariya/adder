@@ -1,6 +1,8 @@
 import 'package:adder_game/application/quiz_bloc/quiz_bloc.dart';
 import 'package:adder_game/domain/question.dart';
-import 'package:adder_game/presentation/core/theme_provider.dart';
+import 'package:adder_game/presentation/core/localizations/app_localization.dart';
+import 'package:adder_game/presentation/core/localizations/localization_provider.dart';
+import 'package:adder_game/presentation/core/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './theme.dart';
@@ -20,6 +22,7 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("Building QuizPage");
     myTheme = MyTheme.fromTheme(Theme.of(context));
     return BlocConsumer<QuizBloc, QuizState>(listener: (context, state) {
       // state.map(
@@ -66,9 +69,7 @@ class _QuizPageState extends State<QuizPage> {
               if (orientation == Orientation.landscape) {
                 return Padding(
                   padding: const EdgeInsets.only(
-                      left: horizontalPadding,
-                      right: horizontalPadding,
-                      bottom: horizontalPadding),
+                      left: horizontalPadding, right: horizontalPadding, bottom: horizontalPadding),
                   child: Row(
                     children: children,
                   ),
@@ -76,9 +77,7 @@ class _QuizPageState extends State<QuizPage> {
               } else {
                 return Padding(
                   padding: const EdgeInsets.only(
-                      left: horizontalPadding,
-                      right: horizontalPadding,
-                      bottom: horizontalPadding),
+                      left: horizontalPadding, right: horizontalPadding, bottom: horizontalPadding),
                   child: Column(
                     children: children,
                   ),
@@ -102,7 +101,7 @@ class _QuizPageState extends State<QuizPage> {
           width: 12,
         ),
         Text(
-          "Adder",
+          AppLocalization.of(context).quizPageTitle,
           style: TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
@@ -128,7 +127,7 @@ class _QuizPageState extends State<QuizPage> {
       buttons = [
         _makeActionButton(
             icon: Icon(Icons.info_outline),
-            tooltip: "About",
+            tooltip: AppLocalization.of(context).about,
             onPressed: () {
               showAboutDialog(
                 context: context,
@@ -136,11 +135,10 @@ class _QuizPageState extends State<QuizPage> {
                   'assets/logo/ic_launcher.png',
                   scale: 3,
                 ),
-                applicationName: "Adder",
+                applicationName: AppLocalization.of(context).appName,
                 applicationVersion: "1.0.0",
                 children: [
-                  Text(
-                      'A game that helps you practice your addition skills. Spend time with this app and you will be rewarded.'),
+                  Text(AppLocalization.of(context).aboutDialogContent),
                 ],
               );
             })
@@ -149,6 +147,7 @@ class _QuizPageState extends State<QuizPage> {
       buttons = [];
     });
     buttons.add(_buildThemeChangeMenu());
+    buttons.add(_buildLanguageChangeMenu());
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: buttons,
@@ -157,25 +156,25 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget _buildThemeChangeMenu() {
     return PopupMenuButton(
-      child: Icon(Icons.color_lens, color: myTheme.appBarActionIconColor),
-      tooltip: "Change theme",
+      icon: Icon(Icons.color_lens, color: myTheme.appBarActionIconColor),
+      tooltip: AppLocalization.of(context).changeTheme,
       itemBuilder: (context) {
         return [
           PopupMenuItem(
-            child: Text("System"),
+            child: Text(AppLocalization.of(context).system),
             value: ThemeMode.system,
           ),
           PopupMenuItem(
-            child: Text("Light"),
+            child: Text(AppLocalization.of(context).light),
             value: ThemeMode.light,
           ),
           PopupMenuItem(
-            child: Text("Dark"),
+            child: Text(AppLocalization.of(context).dark),
             value: ThemeMode.dark,
           ),
         ];
       },
-      onSelected: (value){
+      onSelected: (value) {
         ThemeProvider.of(context, listen: false).changeThemeMode(value);
       },
     );
@@ -194,9 +193,40 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
+  Widget _buildLanguageChangeMenu() {
+    return PopupMenuButton(
+      icon: Icon(Icons.translate, color: myTheme.appBarActionIconColor),
+      tooltip: AppLocalization.of(context).changeLanguage,
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            child: Text(AppLocalization.of(context).system),
+            value: '',
+          ),
+          PopupMenuItem(
+            child: Text(AppLocalization.of(context).hindi),
+            value: 'hi',
+          ),
+          PopupMenuItem(
+            child: Text(AppLocalization.of(context).english),
+            value: 'en',
+          ),
+        ];
+      },
+      onSelected: (value) {
+        print("Selected value: $value");
+        LocalizationProvider localizationProvider = LocalizationProvider.of(context, listen: false);
+        if (value == '') {
+          localizationProvider.changeLocale(useSystemLocale: true);
+        } else {
+          localizationProvider.changeLocale(locale: Locale(value));
+        }
+      },
+    );
+  }
+
   Widget _buildAppBar(QuizState state) {
-    EdgeInsetsGeometry padding =
-        const EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0);
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 18.0, vertical: 16.0);
     return Material(
       color: Colors.transparent,
       child: SafeArea(
@@ -208,15 +238,14 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _buildInfoColumn(
-      {@required int data, String supportingText, Color color}) {
+  Widget _buildInfoColumn({@required int data, String supportingText, Color color}) {
     color = color ?? myTheme.primaryTextColor;
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: Text(
             '$data',
             style: TextStyle(
@@ -246,27 +275,25 @@ class _QuizPageState extends State<QuizPage> {
         Expanded(
           child: _buildInfoColumn(
               data: state.correctAnswersCount,
-              supportingText: "Correct",
+              supportingText: AppLocalization.of(context).correct,
               color: myTheme.correctAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
               data: state.incorrectAnswersCount,
-              supportingText: "Incorrect",
+              supportingText: AppLocalization.of(context).incorrect,
               color: myTheme.incorrectAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
-              data: state.totalAnswersCount -
-                  state.correctAnswersCount -
-                  state.incorrectAnswersCount,
-              supportingText: "Missed",
+              data: state.totalAnswersCount - state.correctAnswersCount - state.incorrectAnswersCount,
+              supportingText: AppLocalization.of(context).missed,
               color: myTheme.missedAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
             data: state.totalAnswersCount,
-            supportingText: "Total",
+            supportingText: AppLocalization.of(context).total,
           ),
         ),
       ],
@@ -274,27 +301,25 @@ class _QuizPageState extends State<QuizPage> {
         Expanded(
           child: _buildInfoColumn(
               data: state.correctAnswersCount,
-              supportingText: "Correct",
+              supportingText: AppLocalization.of(context).correct,
               color: myTheme.correctAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
               data: state.incorrectAnswersCount,
-              supportingText: "Incorrect",
+              supportingText: AppLocalization.of(context).incorrect,
               color: myTheme.incorrectAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
-              data: state.totalAnswersCount -
-                  state.correctAnswersCount -
-                  state.incorrectAnswersCount,
-              supportingText: "Missed",
+              data: state.totalAnswersCount - state.correctAnswersCount - state.incorrectAnswersCount,
+              supportingText: AppLocalization.of(context).missed,
               color: myTheme.missedAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
             data: state.totalAnswersCount,
-            supportingText: "Total",
+            supportingText: AppLocalization.of(context).total,
           ),
         ),
       ],
@@ -302,48 +327,38 @@ class _QuizPageState extends State<QuizPage> {
         Expanded(
           child: _buildInfoColumn(
               data: state.correctAnswersCount,
-              supportingText: "Correct",
+              supportingText: AppLocalization.of(context).correct,
               color: myTheme.correctAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
               data: state.incorrectAnswersCount,
-              supportingText: "Incorrect",
+              supportingText: AppLocalization.of(context).incorrect,
               color: myTheme.incorrectAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
-              data: state.totalAnswersCount -
-                  state.correctAnswersCount -
-                  state.incorrectAnswersCount,
-              supportingText: "Missed",
+              data: state.totalAnswersCount - state.correctAnswersCount - state.incorrectAnswersCount,
+              supportingText: AppLocalization.of(context).missed,
               color: myTheme.missedAnswerColor),
         ),
         Expanded(
           child: _buildInfoColumn(
             data: state.totalAnswersCount,
-            supportingText: "Total",
+            supportingText: AppLocalization.of(context).total,
           ),
         ),
       ],
       finished: (state) => <Widget>[
         Expanded(
-          child: _buildInfoColumn(
-              data: state.correctAnswersCount,
-              supportingText: "Correct",
-              color: Colors.green),
+          child: _buildInfoColumn(data: state.correctAnswersCount, supportingText: "Correct", color: Colors.green),
+        ),
+        Expanded(
+          child: _buildInfoColumn(data: state.incorrectAnswersCount, supportingText: "Incorrect", color: Colors.red),
         ),
         Expanded(
           child: _buildInfoColumn(
-              data: state.incorrectAnswersCount,
-              supportingText: "Incorrect",
-              color: Colors.red),
-        ),
-        Expanded(
-          child: _buildInfoColumn(
-              data: state.totalAnswersCount -
-                  state.correctAnswersCount -
-                  state.incorrectAnswersCount,
+              data: state.totalAnswersCount - state.correctAnswersCount - state.incorrectAnswersCount,
               supportingText: "Missed",
               color: Colors.blue),
         ),
@@ -431,7 +446,7 @@ class _QuizPageState extends State<QuizPage> {
             top: padding,
           ),
           child: Text(
-            "Question $questionNumber/$totalQuestions",
+            "${AppLocalization.of(context).question} $questionNumber/$totalQuestions",
             style: TextStyle(
               color: myTheme.secondaryTextColor,
             ),
@@ -502,7 +517,7 @@ class _QuizPageState extends State<QuizPage> {
             top: padding,
           ),
           child: Text(
-            "Answer $questionNumber/$totalQuestions",
+            "${AppLocalization.of(context).answer} $questionNumber/$totalQuestions",
             style: TextStyle(
               color: myTheme.secondaryTextColor,
             ),
@@ -524,9 +539,7 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Theme(
-          data: ThemeData(
-              primarySwatch: myTheme.lessImportantTimeRemainingColor,
-              brightness: myTheme.brightness),
+          data: ThemeData(primarySwatch: myTheme.lessImportantTimeRemainingColor, brightness: myTheme.brightness),
           child: Opacity(
             opacity: 0.3,
             child: LinearProgressIndicator(
@@ -627,12 +640,11 @@ class _QuizPageState extends State<QuizPage> {
   Widget _buildYesButton(BuildContext context, QuizState state) {
     return _buildButton(
       iconData: Icons.check,
-      text: 'Yes',
+      text: AppLocalization.of(context).yes,
       onTap: () {
         context.bloc<QuizBloc>().add(QuizEvent.onYesButtonPressed());
       },
-      enabled:
-          state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
+      enabled: state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
       color: myTheme.yesButtonColor,
     );
   }
@@ -640,12 +652,11 @@ class _QuizPageState extends State<QuizPage> {
   Widget _buildNoButton(BuildContext context, QuizState state) {
     return _buildButton(
       iconData: Icons.clear,
-      text: 'No',
+      text: AppLocalization.of(context).no,
       onTap: () {
         context.bloc<QuizBloc>().add(QuizEvent.onNoButtonPressed());
       },
-      enabled:
-          state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
+      enabled: state.maybeMap(showingQuestion: (state) => true, orElse: () => false),
       color: myTheme.noButtonColor,
     );
   }
@@ -653,13 +664,14 @@ class _QuizPageState extends State<QuizPage> {
   Widget _buildStartButton(BuildContext context, QuizState state) {
     return _buildButton(
       iconData: Icons.play_arrow,
-      text: 'Start',
+      text: AppLocalization.of(context).start,
       onTap: () {
         context.bloc<QuizBloc>().add(QuizEvent.start());
       },
       color: myTheme.secondaryColor,
     );
   }
+
   Widget _buildRestartButton(BuildContext context, QuizState state) {
     return _buildButton(
       iconData: Icons.replay,
